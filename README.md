@@ -1,382 +1,73 @@
-# QA Automation Project
+# E-ticaret Test Otomasyonu
 
-**Java 17 · Selenium WebDriver · Cucumber · Gherkin · JUnit · Maven ·
-XPath**
+Java 17, Selenium, Cucumber/Gherkin, JUnit, Maven ve SQL Server.
 
-A Java-based test automation learning project demonstrating **Page
-Object Model (POM)**, **Behavior-Driven Development (BDD)**, browser
-automation, unit testing, and HTML test reporting.
+## Mevcut kapsam
 
-> **Project status: In progress.** Five unit tests pass. The Trendyol
-> end-to-end scenario is implemented as a test flow but is not yet
-> passing. SQL Server logging is planned/configurable but has not been
-> verified.
+Tek feature: src/test/resources/features/e-commerce.feature. Trendyol ve Hepsiburada aynı SearchSteps / SearchPage sınıflarıyla giriş gerektirmeyen kablosuz mouse aramasını çalıştırır. Ayrı @demo etiketi mevcut örnek giriş testini seçer. Genel fiyat ayrıştırma yardımcı sınıfı ve üç birim testi vardır.
 
-## Overview
+Telefon rehberi ve Samsung S20'ye özel giriş/model/sıralama/sepet akışı kaldırıldı. SQL test loglama, HTML/JSON/JUnit raporları ve 48 misafir senaryo planı korunur. TestStatus ve FailureCategory enum'ları vardır; özel sınıflandırıcı entegrasyonu henüz yapılmadı. Mevcut logger framework durumlarını (PASSED/FAILED/SKIPPED) kaydeder.
 
-This repository contains two testing areas:
+## Çalıştırma
 
--   **E-commerce web automation:** A Cucumber scenario designed to open
-    Trendyol, allow manual account login, search for `Samsung S20`, sort
-    products by ascending price, add an eligible product to the cart,
-    and verify the cart.
--   **Phonebook validation:** Java unit tests for contact validation,
-    with SQL Server-backed CRUD operations as a development goal.
-
-The project separates human-readable test scenarios from Java step
-definitions and Selenium page interactions.
-
-## Tech Stack
-
-  -----------------------------------------------------------------------
-  Technology                          Purpose
-  ----------------------------------- -----------------------------------
-  Java 17                             Core language
-
-  Selenium WebDriver                  Browser automation
-
-  ChromeDriver                        Chrome browser control
-
-  Cucumber + Gherkin                  BDD feature scenarios
-
-  JUnit                               Unit testing and assertions
-
-  Maven                               Build, dependencies, and test
-                                      execution
-
-  XPath                               Web element locators
-
-  Page Object Model                   Maintainable test architecture
-
-  HTML reporting                      Test results and failure evidence
-
-  SQL Server + JDBC                   Planned/unfinished CRUD and
-                                      execution logging integration
-  -----------------------------------------------------------------------
-
-## Project Structure
-
-The tree below includes **confirmed project files** and clearly marked
-**suggested folders**. Suggested folders may not exist in the current
-repository.
-
-``` text
-qa-automation-project/
-├── pom.xml
-├── README.md
-├── src/
-│   ├── main/
-│   │   └── java/com/yusuf/qa/
-│   │       ├── phonebook/                 # Phonebook application logic
-│   │       ├── database/                  # Suggested: JDBC/SQL access
-│   │       └── config/                    # Suggested: environment configuration
-│   └── test/
-│       ├── java/com/yusuf/qa/
-│       │   ├── pages/
-│       │   │   ├── TrendyolPage.java      # Selenium page actions and XPath
-│       │   │   └── TrendyolPriceTest.java # Price-related unit tests
-│       │   ├── steps/
-│       │   │   └── TrendyolSteps.java     # Cucumber step definitions
-│       │   ├── runners/
-│       │   │   └── TrendyolIT.java        # Cucumber/JUnit runner
-│       │   ├── phonebook/
-│       │   │   └── ContactValidationTest.java
-│       │   ├── hooks/                     # Suggested: test lifecycle hooks
-│       │   └── utils/                     # Suggested: shared helpers
-│       └── resources/
-│           └── features/
-│               ├── trendyol.feature
-│               └── demo.feature
-└── target/                                # Maven-generated output; do not commit
-    ├── trendyolit-report.html
-    └── surefire-reports/
+```powershell
+$env:JAVA_HOME = 'C:\Program Files\Java\jdk-17'
+# Birim testleri
+mvn test
+# Birim testleri ve zorunlu SQL kayıtları
+.\scripts\run-sql-tests.ps1 -TrustServerCertificate
+# Trendyol misafir araması
+.\scripts\run-sql-tests.ps1 -Trendyol -TrustServerCertificate
+# Hepsiburada misafir araması
+.\scripts\run-sql-tests.ps1 -Hepsiburada -TrustServerCertificate
+# İki site birlikte
+.\scripts\run-sql-tests.ps1 -Trendyol -Hepsiburada -TrustServerCertificate
+# Örnek demo giriş testi
+mvn test '-Dtest=EcommerceIT' '-Dcucumber.filter.tags=@demo'
+# Tarayıcı açmadan senaryo/step eşleşmesi
+mvn test '-Dtest=EcommerceIT' '-Dcucumber.execution.dry-run=true'
 ```
 
-### Responsibilities
+Misafir arama senaryoları hesap veya parola istemez. Site erişimi güvenlik nedeniyle engellenirse test başarısız olur; doğrulama atlanmaz. Dry-run ve birim testleri canlı site başarısını kanıtlamaz.
 
-  --------------------------------------------------------------------------------
-  Layer                   Location                         Responsibility
-  ----------------------- -------------------------------- -----------------------
-  Feature                 `src/test/resources/features/`   Defines **what** is
-                                                           tested
+## SQL Server
 
-  Step Definitions        `src/test/java/.../steps/`       Maps Gherkin steps to
-                                                           Java
+Instance: DESKTOP-SDLI8OI\SQLEXPRESS. Veritabanı: QaAutomation. Mevcut yerel JDBC adresi: localhost:14330.
 
-  Page Objects            `src/test/java/.../pages/`       Defines **how** browser
-                                                           interactions work
-
-  Runner                  `src/test/java/.../runners/`     Starts Cucumber
-                                                           scenarios
-
-  Unit Tests              `src/test/java/.../`             Checks isolated Java
-                                                           behavior
-
-  Database                Suggested                        SQL access and
-                          `src/main/java/.../database/`    persistence
-
-  Reports                 `target/`                        Stores generated test
-                                                           outputs
-  --------------------------------------------------------------------------------
-
-### Execution Flow
-
-``` text
-trendyol.feature
-      |
-      v
-TrendyolIT.java
-      |
-      v
-TrendyolSteps.java
-      |
-      v
-TrendyolPage.java
-      |
-      v
-Selenium WebDriver + Chrome
-      |
-      v
-Assertions / Screenshots / HTML Report
-      |
-      v
-SQL Server test logging (not configured yet)
+```powershell
+# TestResults tablosunu kur ve Windows auth DLL dosyasını indir
+.\scripts\setup-sql.ps1
+# Gerektiğinde yönetici PowerShell ile yerel TCP etkinleştir
+.\scripts\enable-local-sql.ps1
 ```
 
-## Prerequisites
+Şema yalnızca dbo.TestResults tanımını içerir. Mevcut veritabanı tabloları ve geçmiş sonuçlar otomatik silinmez. run-sql-tests.ps1 Windows kimlik doğrulamasını ve target/native DLL yolunu ayarlar. SQL kaydı başarısızsa çalıştırma başarısız olur.
 
--   **JDK 17**
--   **Apache Maven**
--   **Google Chrome**
--   **IntelliJ IDEA** or another Java IDE
--   **SQL Server**, only if working on database integration
+TrustServerCertificate varsayılanı false'tur. -TrustServerCertificate yerel geliştirme sertifikasının doğrulanmasını kapatır; bağlantı şifreli kalır. Bu seçenek yerel test için kullanıcı tarafından onaylandı. Java .env dosyasını otomatik okumaz; parolaları kaynak koda yazmayın. mvn clean native DLL dosyasını da siler; sonrasında setup-sql.ps1 yeniden çalıştırılmalıdır.
 
-Check Java and Maven:
+## Raporlar ve belgeler
 
-``` bash
-java -version
-mvn -version
+- target/qa-dashboard.html: süreler, sonuçlar, hata ayrıntıları ve SQL kayıt durumu.
+- target/ecommerce-report.html ve .json: Cucumber senaryoları.
+- target/cucumber-results.xml: Jenkins için JUnit biçimli rapor.
+- target/surefire-reports/: Maven çıktıları.
+- target/screenshots/: alınabildiğinde hata görselleri.
+- docs/test-terimleri.md ve docs/test-plani.md: tanımlar ve kabul ölçütleri.
+- docs/guest-test-scenarios/: 48 planlanan misafir senaryosu; tamamı uygulanmış değildir.
+
+```sql
+SELECT TOP (100) * FROM dbo.TestResults ORDER BY Id DESC;
+SELECT Status, COUNT(*) AS TestCount FROM dbo.TestResults GROUP BY Status;
 ```
 
-## Getting Started
+SQL sütunu SAVED başarılı kayıt, NOT_CONFIGURED eksik bağlantı, FAILED kayıt hatası anlamındadır. Senaryoları Hooks, sıradan JUnit testlerini JunitResultListener kaydeder.
 
-1.  Clone the repository (replace the placeholder with the actual
-    repository URL):
+HTML ve SQL kullanım adımları: [docs/html-sql-reporting.md](docs/html-sql-reporting.md). Raporu otomatik açmak için run-sql-tests.ps1 komutuna -OpenReport ekleyin. SQL sonuç sorguları database/test-results.sql dosyasındadır.
 
-    ``` bash
-    git clone https://github.com/<your-username>/<your-repository>.git
-    cd <your-repository>
-    ```
+## Gherkin tanımlarının feature dosyasındaki yeri
 
-2.  Run the default Maven tests:
+48 misafir senaryosu artık src/test/resources/features/e-commerce.feature içindeki "Planlanan 48 misafir kullanıcı senaryosu" kuralında da bulunur. Her biri @planned ve TC etiketi taşır. Tek feature korunur; yeni bir feature dosyası açılmadı.
 
-    ``` bash
-    mvn clean test
-    ```
+Varsayılan runner ve IntelliJ Cucumber yapılandırması not @planned filtresini kullanır. Böylece Selenium adımları henüz uygulanmamış tanımlar, çalışan arama/demo senaryolarını bozmaz. @planned tanımlarını çalıştırmak henüz desteklenmez; step kodları tamamlandıkça bu etiket kaldırılmalıdır. guest-gherkin.md açıklamalı senaryo referansı olarak korunur.
 
-3.  Run the Trendyol Cucumber test:
-
-    **PowerShell (Windows):**
-
-    ``` powershell
-    mvn "-Dtest=TrendyolIT" test
-    ```
-
-    **Bash:**
-
-    ``` bash
-    mvn -Dtest=TrendyolIT test
-    ```
-
-4.  Open the generated report (if created):
-
-    **PowerShell:**
-
-    ``` powershell
-    Start-Process ".\target\trendyolit-report.html"
-    ```
-
-    **Bash:**
-
-    ``` bash
-    # Open target/trendyolit-report.html in your browser.
-    ```
-
-> **Note:** The Trendyol browser scenario currently fails during the
-> product-search step because the search field is not located as a
-> clickable element. A passing Maven unit-test run does **not** mean the
-> end-to-end scenario passes.
-
-## Example BDD Scenario
-
-The current project uses **Turkish Gherkin step definitions**. An
-illustrative English version of the intended workflow is shown below; it
-is **not a drop-in replacement** unless the Java step annotations are
-updated to match.
-
-``` gherkin
-@trendyol
-Feature: Trendyol product shopping
-
-  Scenario: Add an eligible Samsung S20 product to the cart
-    Given I open the Trendyol homepage
-    When I complete the manual login
-    And I click the search box
-    And I type "Samsung S20" into the search box
-    And I press Enter
-    And I wait for the search results
-    And I select sorting by lowest price
-    And I add the cheapest eligible product to the cart
-    Then I verify that "Samsung S20" is in the cart
-```
-
-### How the Layers Work Together
-
-**Step definition (illustrative):**
-
-``` java
-@When("I type {string} into the search box")
-public void typeProduct(String productName) {
-    trendyolPage.search(productName);
-}
-```
-
-**Page Object (illustrative):**
-
-``` java
-private final By searchBox = By.xpath("//input[@type='search']");
-
-public void search(String productName) {
-    WebElement input = wait.until(
-        ExpectedConditions.elementToBeClickable(searchBox)
-    );
-    input.clear();
-    input.sendKeys(productName);
-    input.sendKeys(Keys.ENTER);
-}
-```
-
-These snippets illustrate the architecture; they are **not independently
-compilable classes**. The `trendyolPage` and `wait` fields must exist,
-and the example XPath must be checked against the live page.
-
-## Test Results
-
-Based on the latest shared run from **October 11, 2026**:
-
-  -----------------------------------------------------------------------
-  Test / capability                   Status
-  ----------------------------------- -----------------------------------
-  `TrendyolPriceTest`                 **3 passed**
-
-  `ContactValidationTest`             **2 passed**
-
-  Unit tests total                    **5 passed, 0 failed**
-
-  Chrome browser launch               Working
-
-  Manual-login confirmation dialog    Working as user confirmation; login
-                                      state is not independently verified
-
-  `TrendyolIT` end-to-end scenario    **Failing**
-
-  Product search                      `TimeoutException` waiting for
-                                      clickable XPath
-
-  Sorting and cart verification       Not reached / not verified
-
-  HTML report                         Generated at
-                                      `target/trendyolit-report.html`
-
-  SQL Server logging                  Skipped because `QA_DB_URL` is not
-                                      configured
-  -----------------------------------------------------------------------
-
-### Known Issues
-
-**1. Product search locator**
-
-``` text
-org.openqa.selenium.TimeoutException:
-waiting for element to be clickable:
-By.xpath:
-//input[@data-testid='suggestion' or contains(@placeholder,'Ara') or @type='search']
-```
-
-The locator and page state must be investigated using Chrome DevTools.
-Cookie dialogs, overlays, and layout changes should also be checked.
-
-**2. Browser DevTools warning**
-
-The project has shown a CDP version warning with Chrome 154 and Selenium
-4.27.0. This warning has **not** been established as the cause of the
-XPath timeout.
-
-**3. Database logging**
-
-``` text
-SQL logging skipped: QA_DB_URL is not configured
-```
-
-The database URL and credentials must be supplied securely before
-verifying SQL logging. Do not commit passwords, tokens, or local
-connection secrets.
-
-## Roadmap
-
--   [x] Java 17 and Maven project setup
--   [x] Cucumber feature files and step definitions
--   [x] Selenium Page Object layer
--   [x] Five passing unit tests
--   [x] HTML report generation
--   [ ] Fix and verify the Trendyol search locator
--   [ ] Verify ascending-price sorting and add-to-cart
--   [ ] Validate actual login state after manual confirmation
--   [ ] Complete and verify phonebook SQL Server CRUD
--   [ ] Configure SQL Server execution logging (`QA_DB_URL`)
--   [ ] Add reliable failure handling and screenshots
--   [ ] Add `.gitignore` and secure configuration examples
--   [ ] Add Jenkins CI pipeline
-
-## Suggested `.gitignore`
-
-Create a `.gitignore` file in the repository root:
-
-``` gitignore
-target/
-.idea/
-*.iml
-*.log
-.env
-.env.*
-!.env.example
-```
-
-Do not add real database credentials to `.env.example`.
-
-## Skills Demonstrated
-
--   Java test automation and basic OOP
--   Selenium WebDriver with XPath and explicit waits
--   Cucumber/Gherkin BDD test design
--   Page Object Model architecture
--   JUnit and Maven execution
--   Debugging Selenium errors and reviewing HTML reports
--   Planning SQL Server/JDBC integration
-
-## Portfolio / CV Description
-
-**QA Automation Framework --- Personal Project (In Progress)**
-
-Developed a Java-based test automation project using Selenium WebDriver,
-Cucumber, JUnit, and Maven with a Page Object Model architecture.
-Structured BDD scenarios using Gherkin, Java step definitions, and
-reusable page interactions. Executed five passing unit tests and
-generated HTML test reports. End-to-end e-commerce automation and SQL
-Server integration remain in development.
-
-------------------------------------------------------------------------
-
-**Disclaimer:** This is an independent educational/portfolio project and
-is not affiliated with Trendyol. The test interacts with a live
-third-party website whose interface and access controls may change.
+Gherkin dili İngilizceye çevrilmiştir. Bütün adımlar birinci tekil şahısla yazılır: I click, I enter, I press, I verify. Çalışan arama senaryosundaki bu adımlar SearchSteps.java içinde ayrı metotlara bağlanır. Aranan kelimeler Türkçe site verisi olarak korunur. @planned tanımlarının Selenium uygulama durumu değişmemiştir.
