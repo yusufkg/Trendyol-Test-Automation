@@ -12,8 +12,11 @@ public final class Database {
     public static Connection connect() throws SQLException {
         String url = System.getenv("QA_DB_URL");
         if (url == null || url.isBlank()) throw new SQLException("QA_DB_URL is not set");
-        return DriverManager.getConnection(url,
-            System.getenv().getOrDefault("QA_DB_USER", ""),
-            System.getenv().getOrDefault("QA_DB_PASSWORD", ""));
+        java.util.Properties properties = new java.util.Properties();
+        String user = System.getenv("QA_DB_USER");
+        String password = System.getenv("QA_DB_PASSWORD");
+        if (user != null && !user.isBlank()) properties.setProperty("user", user);
+        if (password != null) properties.setProperty("password", password);
+        return DriverManager.getConnection(url, properties);
     }
 }
