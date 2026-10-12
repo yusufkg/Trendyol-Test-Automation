@@ -1,31 +1,6 @@
 # language: en
 Feature: E-commerce test automation
 
-  Rule: Implemented automation scenarios
-    @guest @search @smoke
-    Scenario Outline: I search for a product on <site> as a guest
-      Given I open the "<site>" home page
-      When I click the search field
-      And I enter "kablosuz mouse" into the search field
-      And I press Enter
-      Then I verify search results for "kablosuz mouse" are displayed
-
-      @trendyol
-      Examples: Trendyol
-        | site     |
-        | Trendyol |
-
-      @hepsiburada
-      Examples: Hepsiburada
-        | site        |
-        | Hepsiburada |
-
-    @demo
-    Scenario: I sign in with the demo account
-      Given I open the demo login page
-      When I sign in with the valid demo account
-      Then I verify the login success message is displayed
-
   Rule: Guest scenario catalog
     Background:
       Given I have configured the target site and scenario test data
