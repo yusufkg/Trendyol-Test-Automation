@@ -502,10 +502,12 @@ Feature: Guest e-commerce product operations
 - Sepet testleri ayrı misafir oturumunda yalnızca testin eklediği ürünlerle yürütülür; test sonunda kendi verileri temizlenir. Sipariş veya ödeme yapılmaz.
 - Ürün detayı yeni sekmede açılırsa sekme kimlikleri kaydedilir; geri dönüş testi kaynak sekmeye dönerek doğrulanır. TC-004 aynı sekmedeki gerçek geri/ileri geçmişini sınar.
 - TC-048, kontrollü bir süre kontrolüdür; kapsamlı yük veya performans testi değildir.
-- Özel PASS/FAIL/BLOCKED sınıflandırmasının Java listener ve SQL şemasına entegrasyonu bu dokümanla tamamlanmış sayılmaz. Çalıştırılabilir aktif kodun kapsamı README ve `e-commerce.feature` ile belirlenir.
 
 ## Doğrulama
 
 11 Ekim 2026: Projedeki Gherkin 28.0.0 ayrıştırıcısıyla sözdizimi doğrulandı. 48 senaryo tanımı, örnek tabloları açıldığında 52 senaryo örneği ve 0 ayrıştırma hatası bulundu. TC-001–TC-048 kimlikleri eksiksiz ve tekildir. Bu doğrulama Selenium adımlarını veya canlı site davranışını çalıştırmaz.
 
 48 tanım tek src/test/resources/features/e-commerce.feature dosyasına da aktarılmıştır. @planned etiketli bölüm henüz Selenium adımları uygulanmadığı için varsayılan çalıştırmadan hariç tutulur.
+
+
+TC-024 uygulanmıştır; diğer 47 senaryo planlıdır. Güncel çalıştırma kapsamı ana README.md dosyasındadır. Otomatik SQL/HTML raporlama kaldırılmıştır.

@@ -32,15 +32,16 @@ Feature: E-commerce test automation
       And I am not signed in
 
     # A. Home page and navigation
-    @planned @guest @TC-001 @smoke @navigation
-    Scenario: I open the home page successfully
+    @guest @TC-001 @smoke @navigation
+    Scenario: I open the Trendyol home page successfully using XPath
       Given I start a new guest session in a supported browser
       When I open the home page
-      Then I verify the home page is ready to use
-      And I verify the site logo is visible
-      And I verify the search field is visible
-      And I verify the main category menu is visible
-      And I verify no application error message is displayed
+      Then I verify the page has loaded
+      And I verify "//a[@data-testid='navigation-logo-component']" is visible
+      And I verify "//button[@data-testid='suggestion-placeholder'] | //input[@data-testid='browsing-search-input' or @data-testid='suggestion' or @type='search']" is visible
+      And I verify "//*[@data-testid='sections-wrapper']//a[@data-testid='section-item']" is visible
+      When I click "//button[@data-testid='suggestion-placeholder'] | //input[@data-testid='browsing-search-input' or @data-testid='suggestion' or @type='search']"
+      Then I verify "//*[@role='alert' or @data-testid='error-message'][contains(., 'Bir hata oluştu') or contains(., 'Something went wrong') or contains(., 'Beklenmeyen bir hata')]" is not visible
 
     @planned @guest @TC-002 @navigation
     Scenario: I return to the home page using the logo

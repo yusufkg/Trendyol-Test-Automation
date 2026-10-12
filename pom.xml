@@ -6,19 +6,10 @@
   <dependency><groupId>io.cucumber</groupId><artifactId>cucumber-java</artifactId><version>7.20.1</version><scope>test</scope></dependency>
   <dependency><groupId>io.cucumber</groupId><artifactId>cucumber-junit</artifactId><version>7.20.1</version><scope>test</scope></dependency>
   <dependency><groupId>junit</groupId><artifactId>junit</artifactId><version>4.13.2</version><scope>test</scope></dependency>
-  <dependency><groupId>com.microsoft.sqlserver</groupId><artifactId>mssql-jdbc</artifactId><version>12.8.1.jre11</version></dependency>
  </dependencies>
  <build><plugins>
   <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.13.0</version></plugin>
   <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.2.5</version>
-   <configuration><properties><property><name>listener</name><value>com.yusuf.qa.support.JunitResultListener</value></property></properties></configuration>
   </plugin>
  </plugins></build>
- <profiles>
-  <profile><id>sql</id><properties><qa.db.required>true</qa.db.required></properties>
-   <build><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId>
-    <configuration><systemPropertyVariables><qa.db.required>true</qa.db.required></systemPropertyVariables></configuration>
-   </plugin></plugins></build>
-  </profile>
- </profiles>
 </project>
