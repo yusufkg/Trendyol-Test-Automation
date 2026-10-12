@@ -60,4 +60,15 @@ public class XPathSteps {
     public void verifyNotVisible(String xpath) {
         waitForElement().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath)));
     }
+
+    @Then("I verify the URL is {string}")
+    public void verifyUrl(String expectedUrl) {
+        waitForElement().until(ExpectedConditions.urlToBe(expectedUrl));
+    }
+
+    @Then("I verify the URL path is {string}")
+    public void verifyUrlPath(String expectedPath) {
+        waitForElement().until(driver -> expectedPath.equals(
+            java.net.URI.create(driver.getCurrentUrl()).getPath()));
+    }
 }

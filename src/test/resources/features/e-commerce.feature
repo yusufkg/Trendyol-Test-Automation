@@ -43,13 +43,17 @@ Feature: E-commerce test automation
       When I click "//button[@data-testid='suggestion-placeholder'] | //input[@data-testid='browsing-search-input' or @data-testid='suggestion' or @type='search']"
       Then I verify "//*[@role='alert' or @data-testid='error-message'][contains(., 'Bir hata oluştu') or contains(., 'Something went wrong') or contains(., 'Beklenmeyen bir hata')]" is not visible
 
-    @planned @guest @TC-002 @navigation
+    @guest @TC-002 @navigation
     Scenario: I return to the home page using the logo
-      Given I have opened the home page
-      And I have opened an existing category page
-      When I click the site logo
-      Then I verify I am redirected to the home page URL
-      And I verify the main navigation controls are visible
+      Given I verify the page has loaded
+      When I click "//a[@data-testid='section-item' and @href='/butik/liste/5/elektronik']"
+      Then I verify the URL path is "/butik/liste/5/elektronik"
+      And I verify the page has loaded
+      When I click "//a[@data-testid='navigation-logo-component']"
+      Then I verify the URL is "https://www.trendyol.com/"
+      And I verify "//a[@data-testid='navigation-logo-component']" is visible
+      And I verify "//button[@data-testid='suggestion-placeholder'] | //input[@data-testid='browsing-search-input' or @data-testid='suggestion' or @type='search']" is visible
+      And I verify "//*[@data-testid='sections-wrapper']//a[@data-testid='section-item']" is visible
 
     @planned @guest @TC-003 @navigation
     Scenario: I open the category menu
