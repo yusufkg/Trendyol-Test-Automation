@@ -2,9 +2,12 @@ package com.yusuf.qa.pages;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 import java.util.Locale;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import com.yusuf.qa.pricing.TurkishPrice;
 
 /** Guest search only; each site's selectors are kept together. */
@@ -24,13 +27,13 @@ public class SearchPage {
         switch (site) {
             case "Trendyol" -> {
                 home = "https://www.trendyol.com/";
-                searchInput = By.cssSelector("input[data-testid='browsing-search-input'], input[data-testid='suggestion'], input[type='search']");
-                productCards = By.cssSelector("[data-testid='product-card'], .p-card-wrppr");
+                searchInput = By.xpath("//input[@data-testid='browsing-search-input' or @data-testid='suggestion' or @type='search']");
+                productCards = By.xpath("//*[@data-testid='product-card' or contains(concat(' ', normalize-space(@class), ' '), ' p-card-wrppr ')]");
             }
             case "Hepsiburada" -> {
                 home = "https://www.hepsiburada.com/";
-                searchInput = By.cssSelector("input[data-test-id='search-bar-input']:not([class*='initialComponent'])");
-                productCards = By.cssSelector("main article");
+                searchInput = By.xpath("//input[@data-test-id='search-bar-input' and not(contains(@class, 'initialComponent'))]");
+                productCards = By.xpath("//main//article");
             }
             default -> throw new IllegalArgumentException("Desteklenmeyen site: " + site);
         }
@@ -50,8 +53,8 @@ public class SearchPage {
                     element.sendKeys(Keys.chord(Keys.CONTROL, "a"), query);
                     if (query.equals(element.getDomProperty("value"))) return element;
                 }
-                for (WebElement button : d.findElements(By.cssSelector(
-                        "button[data-testid='suggestion-placeholder'], input[data-test-id='search-bar-input'][class*='initialComponent']"))) {
+                for (WebElement button : d.findElements(By.xpath(
+                        "//button[@data-testid='suggestion-placeholder'] | //input[@data-test-id='search-bar-input' and contains(@class, 'initialComponent')]"))) {
                     // The placeholder input is not editable; its wrapper activates the real search component.
                     if ("input".equalsIgnoreCase(button.getTagName())) button = button.findElement(By.xpath(".."));
                     if (button.isDisplayed() && button.isEnabled()) button.click();
@@ -69,8 +72,8 @@ public class SearchPage {
             try {
                 for (WebElement field : d.findElements(searchInput))
                     if (field.isDisplayed() && field.isEnabled()) return field;
-                for (WebElement placeholder : d.findElements(By.cssSelector(
-                        "button[data-testid='suggestion-placeholder'], input[data-test-id='search-bar-input'][class*='initialComponent']"))) {
+                for (WebElement placeholder : d.findElements(By.xpath(
+                        "//button[@data-testid='suggestion-placeholder'] | //input[@data-test-id='search-bar-input' and contains(@class, 'initialComponent')]"))) {
                     if ("input".equalsIgnoreCase(placeholder.getTagName())) placeholder = placeholder.findElement(By.xpath(".."));
                     if (placeholder.isDisplayed() && placeholder.isEnabled()) placeholder.click();
                 }
@@ -84,7 +87,7 @@ public class SearchPage {
         return wait.until(d -> {
             assertAccessible();
             try {
-                boolean queryShown = d.findElements(By.tagName("h1")).stream().anyMatch(e ->
+                boolean queryShown = d.findElements(By.xpath("//h1")).stream().anyMatch(e ->
                     e.isDisplayed() && e.getText().toLowerCase(Locale.forLanguageTag("tr")).contains(expected));
                 return queryShown && d.findElements(productCards).stream().anyMatch(e -> e.isDisplayed() && !e.getText().isBlank());
             } catch (StaleElementReferenceException ignored) { return false; }
@@ -98,28 +101,36 @@ public class SearchPage {
     }
 
     public SelectedProduct recordFirstProduct() {
+        return visibleProducts().get(0);
+    }
+
+    public List<SelectedProduct> visibleProducts() {
         return wait.until(d -> {
             assertAccessible(); dismissOverlays();
             try {
+                List<SelectedProduct> products = new ArrayList<>();
                 for (WebElement card : d.findElements(productCards)) {
                     if (!card.isDisplayed()) continue;
-                    var headings = card.findElements(By.cssSelector("h2"));
+                    var headings = card.findElements(By.xpath(".//h2"));
                     if (headings.isEmpty()) continue;
                     String name = headings.get(0).getText();
-                    var brands = card.findElements(By.cssSelector(".product-brand"));
-                    var names = card.findElements(By.cssSelector(".product-name"));
+                    var brands = card.findElements(By.xpath(".//*[contains(concat(' ', normalize-space(@class), ' '), ' product-brand ')]"));
+                    var names = card.findElements(By.xpath(".//*[contains(concat(' ', normalize-space(@class), ' '), ' product-name ')]"));
                     if (!brands.isEmpty() && !names.isEmpty()) name = brands.get(0).getText() + " " + names.get(0).getText();
                     WebElement link = card.getTagName().equalsIgnoreCase("a") ? card :
-                        card.findElement(By.cssSelector("h2 a[href]"));
+                        card.findElement(By.xpath(".//h2//a[@href]"));
                     String url = link.getAttribute("href");
-                    for (WebElement priceElement : card.findElements(By.cssSelector(
-                            "[data-testid='sale-price'], [data-testid='price-value'], [data-test-id^='final-price-'], .prc-dsc"))) {
+                    for (WebElement priceElement : card.findElements(By.xpath(
+                            ".//*[@data-testid='sale-price' or @data-testid='single-price' or @data-testid='price-value' or starts-with(@data-test-id, 'final-price-') or contains(concat(' ', normalize-space(@class), ' '), ' prc-dsc ')]"))) {
                         if (!priceElement.isDisplayed()) continue;
                         var price = TurkishPrice.parse(priceElement.getText());
-                        if (price != null && price.signum() > 0 && !name.isBlank())
-                            return new SelectedProduct(SelectedProduct.idFromUrl(url), name, price, url);
+                        if (price != null && price.signum() > 0 && !name.isBlank()) {
+                            products.add(new SelectedProduct(SelectedProduct.idFromUrl(url), name, price, url));
+                            break;
+                        }
                     }
                 }
+                if (!products.isEmpty()) return products;
             } catch (StaleElementReferenceException ignored) { }
             return null;
         });
@@ -131,7 +142,7 @@ public class SearchPage {
         sourceUrl = driver.getCurrentUrl();
         WebElement link = wait.until(d -> {
             dismissOverlays();
-            for (WebElement candidate : d.findElements(By.cssSelector("a[href]"))) {
+            for (WebElement candidate : d.findElements(By.xpath("//a[@href]"))) {
                 if (candidate.isDisplayed() && product.url().equals(candidate.getAttribute("href"))) return candidate;
             }
             return null;
@@ -148,19 +159,26 @@ public class SearchPage {
         driver.switchTo().window(sourceWindow);
     }
 
-    private void dismissOverlays() {
-        for (WebElement button : driver.findElements(By.cssSelector(
-                "#onetrust-reject-all-handler, .gender-modal-section .modal-section-close, [data-testid='onboarding-overlay'][aria-label='Dismiss']"))) {
-            try { if (button.isDisplayed() && button.isEnabled()) button.click(); }
+    public void dismissOverlays() {
+        for (WebElement button : driver.findElements(By.xpath(
+                "//*[@id='onetrust-reject-all-handler'] | //*[contains(concat(' ', normalize-space(@class), ' '), ' gender-modal-section ')]//*[contains(concat(' ', normalize-space(@class), ' '), ' modal-section-close ')] | //*[@data-testid='onboarding-overlay' and @aria-label='Dismiss'] | //button[contains(concat(' ', normalize-space(@class), ' '), ' onboarding__default-renderer-primary-button ')]"))) {
+            try {
+                if (button.isDisplayed() && button.isEnabled()) {
+                    boolean detailTour = String.valueOf(button.getAttribute("class")).contains("onboarding__default-renderer");
+                    button.click();
+                    if (detailTour) new WebDriverWait(driver, Duration.ofSeconds(5)).until(
+                        ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(concat(' ', normalize-space(@class), ' '), ' onboarding-tour__overlay ')]")));
+                }
+            }
             catch (StaleElementReferenceException | ElementClickInterceptedException ignored) { }
         }
     }
 
-    private void assertAccessible() {
-        for (WebElement body : driver.findElements(By.tagName("body"))) {
+    public void assertAccessible() {
+        for (WebElement body : driver.findElements(By.xpath("//body"))) {
             String text = body.getText();
             if (text.contains("Bağlantınız güvensiz") && text.contains("erişemiyorsunuz"))
-                throw new AssertionError("Siteye erişim güvenlik kontrolü tarafından engellendi.");
+                throw new IllegalStateException("Siteye erişim güvenlik kontrolü tarafından engellendi.");
         }
     }
 }

@@ -3,14 +3,11 @@
 | Alan | Kontrol | Beklenen |
 |---|---|---|
 | Misafir arama | Trendyol / Hepsiburada üzerinde kablosuz mouse ara | Sorguyu içeren sonuç başlığı ve görünür ürün kartları. |
-| Fiyat | 12.499,90 TL | 12499.90 |
-| Fiyat | 12.499 TL | 12499 |
-| Fiyat | Fiyat içermeyen metin | null |
-| Demo | Hazır örnek hesabıyla giriş | Başarı mesajı. |
-| SQL | Başarılı/başarısız test | Durum, süre ve gerçek hata ayrıntıları kaydedilir. |
-| SQL | Kayıt hatası | HTML raporunda hata ve başarısız çalıştırma. |
-| Rapor | Senaryo hatası | Hata adımı ve alınabiliyorsa ekran görüntüsü. |
+| Ürün detay | TC-024: mouse aramasından ürün kartına tıkla | Ürün kimliği ve adı eşleşir; görsel ve fiyat görünür. |
+| Fiyat | Türkçe fiyat metnini ayrıştır | Sayısal fiyat doğru elde edilir; geçersiz metin reddedilir. |
+| Ürün kimliği | Ürün bağlantısını ayrıştır | Kart ve detay eşleştirmesinde kullanılacak kimlik elde edilir. |
+| Demo | Ayrı demo sitesinde örnek hesabıyla giriş | Başarı mesajı. |
 
-Tek e-commerce.feature ve EcommerceIT runner kullanılır. @trendyol ve @hepsiburada misafir aramasını; @demo ayrı örnek giriş testini seçer. 48 senaryo taslağı docs/guest-test-scenarios altında korunur.
+Tek e-commerce.feature ve EcommerceIT runner kullanılır. Diğer 47 misafir senaryosu @planned etiketli tasarımdır. Çalıştırma komutları README.md içindedir.
 
-Telefon rehberi ve Samsung S20 alışveriş akışı kaldırıldı. Dry-run tarayıcı işlemlerini doğrulamaz; canlı sitelerin güvenlik engelleri çalıştırmayı etkileyebilir.
+Trendyol hesap girişi ve Samsung S20 alışveriş akışı iptal edildi. SQL Server kayıtları ve otomatik HTML/görsel raporlama kaldırıldı. Sonuçlar terminal ve standart Maven test çıktılarından incelenir. Dry-run canlı tarayıcı davranışını doğrulamaz.

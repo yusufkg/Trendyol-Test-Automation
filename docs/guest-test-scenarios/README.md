@@ -24,4 +24,6 @@ Kullanıcının paylaştığı 48 test tasarımı, 12 gruba ayrılmıştır. Her
 
 İlk uygulama aşaması için kaynak planın önerdiği altı bağımsız akış: ana sayfa, ürün arama, marka filtresi, artan fiyat sıralaması, ürün detayı ve liste/detay fiyat karşılaştırması.
 
-Misafir sepet işlemleri sitenin desteğine bağlıdır. Giriş zorunluysa giriş otomasyonu eklenmeden engel kaydedilir. Favori işleminin beklenen giriş yönlendirmesi ise doğru gerçekleşirse başarılı bir testtir. Güvenlik engelleri uygulama hatasıyla aynı kabul edilmez. Sonuç sınıflandırmasının listener ve SQL şemasına entegrasyonu ayrıca uygulanmalıdır.
+
+
+TC-024 uygulanmıştır; diğer 47 senaryo planlıdır. Güncel çalıştırma kapsamı ana README.md dosyasındadır. Otomatik SQL/HTML raporlama kaldırılmıştır.

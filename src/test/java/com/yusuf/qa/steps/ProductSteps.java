@@ -15,7 +15,7 @@ public class ProductSteps {
         String site = System.getProperty("qa.site", "Trendyol");
         if (!site.equals("Trendyol") && !site.equals("Hepsiburada")) throw new IllegalArgumentException("Desteklenmeyen site: " + site);
         TestContext.open(); search = new SearchPage(TestContext.driver(), site); search.open();
-        System.out.println("TC-024 hedef site: " + site);
+        System.out.println("Hedef site: " + site);
     }
     @Given("I am not signed in") public void verifyGuest() { assertTrue("Misafir giriş durumu doğrulanamadı", search.guestUserVisible()); }
     @Given("I have searched for {string}") public void search(String query) {

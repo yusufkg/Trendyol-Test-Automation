@@ -12,9 +12,9 @@ public class DemoLoginPage {
     public DemoLoginPage(WebDriver driver) { this.driver = driver; wait = new WebDriverWait(driver, Duration.ofSeconds(15)); }
     public void open() { driver.get("https://the-internet.herokuapp.com/login"); }
     public void login(String user, String pass) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).sendKeys(user);
-        driver.findElement(By.id("password")).sendKeys(pass);
-        driver.findElement(By.cssSelector("button[type='submit']")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='username']"))).sendKeys(user);
+        driver.findElement(By.xpath("//*[@id='password']")).sendKeys(pass);
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
     }
-    public boolean success() { return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("flash"))).getText().contains("You logged into a secure area!"); }
+    public boolean success() { return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='flash']"))).getText().contains("You logged into a secure area!"); }
 }
