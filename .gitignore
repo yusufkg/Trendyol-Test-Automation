@@ -21,3 +21,6 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Test validation logs
+*-validation.log
