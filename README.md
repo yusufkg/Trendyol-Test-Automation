@@ -1,28 +1,13 @@
-# E-commerce test automation
+# Misafir e-ticaret test otomasyonu
 
-Java 17+, Selenium, Cucumber/Gherkin, JUnit ve Maven.
+Java, Selenium, Cucumber, JUnit ve Maven. Tek feature dosyasında yalnızca TC-001–TC-048 misafir senaryoları bulunur. TC-001, TC-002 ve TC-024 uygulanmıştır; kalan 45 senaryo @planned etiketli tasarımdır.
 
-Aktif Selenium senaryoları: Trendyol ve Hepsiburada misafir ürün araması, TC-024 ürün detay kontrolü ve ayrı demo sitesinde giriş testi. Tek feature dosyası `src/test/resources/features/e-commerce.feature` kullanılır. Misafir kataloğundaki diğer 47 senaryo `@planned` olarak tasarımdır; Selenium uygulamaları henüz yoktur.
+Trendyol login, Samsung S20 alışveriş akışı, SQL kayıtları, HTML/görsel raporlama ve katalog dışındaki demo/arama senaryoları kaldırılmıştır. SearchPage, TC-024 ürün detay akışının arama işlemleri için korunur.
 
-Trendyol hesap girişi, Samsung S20 arama/sıralama/sepet akışı, SQL Server test kayıtları ve otomatik HTML/görsel raporlama kaldırıldı.
+Birim testleri: mvn clean test
 
-## Çalıştırma
+Adım eşleşmesi: mvn test '-Dtest=EcommerceIT' '-Dcucumber.execution.dry-run=true'
 
-PowerShell'de proje klasöründen:
+TC-002 canlı test: mvn test '-Dtest=EcommerceIT' '-Dcucumber.filter.tags=@TC-002' '-Dqa.site=Trendyol'
 
-```powershell
-# Birim testleri
-mvn clean test
-# Aktif Gherkin adımlarını tarayıcı açmadan kontrol et
-mvn test '-Dtest=EcommerceIT' '-Dcucumber.execution.dry-run=true'
-# Trendyol misafir araması
-mvn test '-Dtest=EcommerceIT' '-Dcucumber.filter.tags=@search and @trendyol'
-# Hepsiburada misafir araması
-mvn test '-Dtest=EcommerceIT' '-Dcucumber.filter.tags=@search and @hepsiburada'
-# Ürün detay kontrolü
-mvn test '-Dtest=EcommerceIT' '-Dcucumber.filter.tags=@TC-024' '-Dqa.site=Trendyol'
-```
-
-Canlı testler Chrome açar. Sonuçlar terminalde ve Maven'in standart `target/surefire-reports` çıktılarında bulunur. Dry-run yalnızca Gherkin ile Java adımlarının eşleşmesini kontrol eder.
-
-Test planı: `docs/test-plani.md`. 48 misafir senaryo tasarımı: `docs/guest-test-scenarios`.
+XPath doğrudan Gherkin'de kullanılabilir: I click "..." ve I verify "..." is visible. Sonuçlar terminal ve standart Maven surefire çıktılarından incelenir.
