@@ -1,0 +1,11 @@
+{
+  "homeUrl": "https://www.trendyol.com/",
+  "logo": "//a[@data-testid='navigation-logo-component']",
+  "search": "//button[@data-testid='suggestion-placeholder'] | //input[@data-testid='browsing-search-input' or @data-testid='suggestion' or @type='search']",
+  "categories": "//*[@data-testid='sections-wrapper']//a[@data-testid='section-item']",
+  "electronicCategory": "//a[@data-testid='section-item' and @href='/butik/liste/5/elektronik']",
+  "searchInput": "//input[@data-testid='browsing-search-input' or @data-testid='suggestion' or @type='search']",
+  "searchHeading": "//h1",
+  "productCards": "//*[@data-testid='product-card' or contains(concat(' ', normalize-space(@class), ' '), ' p-card-wrppr ')]",
+  "productTitles": "//*[@data-testid='product-card' or contains(concat(' ', normalize-space(@class), ' '), ' p-card-wrppr ')]//h2"
+}
