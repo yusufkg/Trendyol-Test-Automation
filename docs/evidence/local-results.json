@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-17",
+  "environment": "local Windows; not GitHub Actions",
+  "sourceCommit": "60b8984775c5bdfa5cb7cfd8552a0a24836fc4eb",
+  "results": [
+    {
+      "suite": "com.yusuf.qa.pages.SelectedProductTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "scope": "unit"
+    },
+    {
+      "suite": "com.yusuf.qa.pricing.TurkishPriceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "scope": "unit"
+    },
+    {
+      "suite": "com.yusuf.qa.runners.EcommerceIT",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "scope": "step-mapping-only"
+    },
+    {
+      "suite": "setup.SetupRunner",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "scope": "headless-chrome-local-fixture"
+    }
+  ]
+}
