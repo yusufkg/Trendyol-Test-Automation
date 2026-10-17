@@ -6,7 +6,6 @@ Feature: E-commerce test automation
       Given I have configured the target site and scenario test data
       And I am not signed in
 
-    # A. Home page and navigation
     @guest @TC-001 @smoke @navigation
     Scenario: I open the Trendyol home page successfully using XPath
       Given I start a new guest session in a supported browser
@@ -49,7 +48,6 @@ Feature: E-commerce test automation
       Then I verify the same product detail page is displayed
       And I verify no unexpected redirect or application error occurs
 
-    # B. Product search
     @planned @guest @TC-005 @smoke @search
     Scenario: I search with a valid keyword
       Given I have opened the home page
@@ -118,7 +116,6 @@ Feature: E-commerce test automation
       And I verify the visible products satisfy the new query relevance criteria
       And I verify the previous query result state is no longer shown
 
-    # C. Categories
     @planned @guest @TC-011 @smoke @category
     Scenario: I select a main category
       Given I have opened the home page
@@ -150,7 +147,6 @@ Feature: E-commerce test automation
       Then I verify the new category products are displayed
       And I verify the previous category-specific filter follows the configured rule
 
-    # D. Filtering
     @planned @guest @TC-015 @filter
     Scenario: I apply and remove a brand filter
       Given I have searched for "kulaklık"
@@ -199,7 +195,6 @@ Feature: E-commerce test automation
       And I verify default query filters follow the required rules
       And I verify results are updated for the unfiltered query
 
-    # E. Sorting
     @planned @guest @TC-020 @sorting @price
     Scenario: I sort by ascending price
       Given I have searched for "klavye"
@@ -238,7 +233,6 @@ Feature: E-commerce test automation
       And I verify visible products match the selected brand
       And I verify comparable prices are in ascending order
 
-    # F. Product details
     @guest @TC-024 @smoke @product
     Scenario: I open the selected product details
       Given I have searched for "mouse"
@@ -278,7 +272,6 @@ Feature: E-commerce test automation
       And I verify review components are visible when review data exists
       And I verify the configured empty state when no review data exists
 
-    # G. Price and discount checks
     @planned @guest @TC-029 @price @product
     Scenario: I compare list and detail prices
       Given I have configured the same product variant seller and campaign conditions
@@ -313,7 +306,6 @@ Feature: E-commerce test automation
       When I click the first variant again
       Then I verify its expected price is displayed again
 
-    # H. Guest cart operations, only when supported without login
     @planned @guest @TC-033 @cart @conditional
     Scenario: I add a product to the guest cart
       Given I have verified guest cart operations are supported
@@ -353,7 +345,6 @@ Feature: E-commerce test automation
       Then I verify the cart lines show the correct products and quantities
       And I verify the total includes product amounts discounts and delivery charge correctly
 
-    # I. Favorites and authentication redirects
     @planned @guest @TC-037 @favorites @authentication
     Scenario: I verify the guest favorites behavior
       Given I am viewing a product card with a favorites control
@@ -371,7 +362,6 @@ Feature: E-commerce test automation
       And I verify the protected action is not completed
       And I do not sign in
 
-    # J. Negative and boundary checks
     @planned @guest @TC-039 @search @negative
     Scenario: I submit an empty search
       Given I have opened the home page
@@ -418,7 +408,6 @@ Feature: E-commerce test automation
       And I verify the visible filter state matches that rule
       And I verify no unexpected application error occurs
 
-    # K. Browser and responsive checks
     @planned @guest @TC-043 @browser @chrome
     Scenario: I search in the current supported Chrome version
       Given I start a new guest session in the current supported Chrome version
@@ -461,7 +450,6 @@ Feature: E-commerce test automation
       Then I verify the search field and product cards are usable in the mobile viewport
       And I verify no overlap or overflow prevents basic interactions
 
-    # L. Accessibility and performance
     @planned @guest @TC-046 @accessibility @keyboard
     Scenario: I search using only the keyboard
       Given I have opened the home page

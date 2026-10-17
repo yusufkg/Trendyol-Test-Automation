@@ -1,27 +1,21 @@
 
-# IntelliJ IDEA
 .idea/
 *.iml
 
-# Maven
 target/
 
-# Gauge generated files
 .gauge/
 gauge_bin/
 logs/
 reports/
 
-# Downloaded Java libraries
 /libs/*.jar
 
-# Operating system
 .DS_Store
 Thumbs.db
 .env
 .env.*
 !.env.example
 
-# Test validation logs
 *-validation.log
 *.log

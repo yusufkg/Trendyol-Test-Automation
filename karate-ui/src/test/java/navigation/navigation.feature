@@ -70,12 +70,10 @@ Feature: Trendyol guest navigation - numbered scenarios
     Then I verify the same product detail page is displayed
     And I verify no unexpected redirect or application error occurs
 
-    # B. Product search
   @guest @TC-005 @smoke @search
   Scenario: TC-005 - I search with a valid keyword
     * def query = 'kablosuz mouse'
     * dismissOverlays()
-    # Re-check late overlays while activating the search component.
     * text activateSearch =
     """
     (function() {
@@ -105,7 +103,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     * def productNames = scriptAll(locators.productTitles, '_.innerText')
     * def sample = karate.filter(productNames, function(name){ return name.trim().length > 0 }).slice(0, 5)
     And assert sample.length > 0
-    # Relevance rule: each sampled title must contain mouse or fare.
     * def relevant = karate.filter(sample, function(name){ return /mouse|fare/i.test(name) })
     And match relevant == sample
     And screenshot()
@@ -166,7 +163,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     And I verify the visible products satisfy the new query relevance criteria
     And I verify the previous query result state is no longer shown
 
-    # C. Categories
   @planned @guest @TC-011 @smoke @category
   Scenario: I select a main category
     Given I have opened the home page
@@ -198,7 +194,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     Then I verify the new category products are displayed
     And I verify the previous category-specific filter follows the configured rule
 
-    # D. Filtering
   @planned @guest @TC-015 @filter
   Scenario: I apply and remove a brand filter
     Given I have searched for "kulaklık"
@@ -247,7 +242,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     And I verify default query filters follow the required rules
     And I verify results are updated for the unfiltered query
 
-    # E. Sorting
   @planned @guest @TC-020 @sorting @price
   Scenario: I sort by ascending price
     Given I have searched for "klavye"
@@ -286,7 +280,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     And I verify visible products match the selected brand
     And I verify comparable prices are in ascending order
 
-    # F. Product details
   @planned @guest @TC-024 @smoke @product
   Scenario: I open the selected product details
     Given I have searched for "mouse"
@@ -326,7 +319,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     And I verify review components are visible when review data exists
     And I verify the configured empty state when no review data exists
 
-    # G. Price and discount checks
   @planned @guest @TC-029 @price @product
   Scenario: I compare list and detail prices
     Given I have configured the same product variant seller and campaign conditions
@@ -361,7 +353,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     When I click the first variant again
     Then I verify its expected price is displayed again
 
-    # H. Guest cart operations, only when supported without login
   @planned @guest @TC-033 @cart @conditional
   Scenario: I add a product to the guest cart
     Given I have verified guest cart operations are supported
@@ -401,7 +392,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     Then I verify the cart lines show the correct products and quantities
     And I verify the total includes product amounts discounts and delivery charge correctly
 
-    # I. Favorites and authentication redirects
   @planned @guest @TC-037 @favorites @authentication
   Scenario: I verify the guest favorites behavior
     Given I am viewing a product card with a favorites control
@@ -419,7 +409,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     And I verify the protected action is not completed
     And I do not sign in
 
-    # J. Negative and boundary checks
   @planned @guest @TC-039 @search @negative
   Scenario: I submit an empty search
     Given I have opened the home page
@@ -466,7 +455,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     And I verify the visible filter state matches that rule
     And I verify no unexpected application error occurs
 
-    # K. Browser and responsive checks
   @planned @guest @TC-043 @browser @chrome
   Scenario: I search in the current supported Chrome version
     Given I start a new guest session in the current supported Chrome version
@@ -509,7 +497,6 @@ Feature: Trendyol guest navigation - numbered scenarios
     Then I verify the search field and product cards are usable in the mobile viewport
     And I verify no overlap or overflow prevents basic interactions
 
-    # L. Accessibility and performance
   @planned @guest @TC-046 @accessibility @keyboard
   Scenario: I search using only the keyboard
     Given I have opened the home page
