@@ -1,0 +1,76 @@
+name: Maven and Karate CI
+
+on:
+  push:
+    branches: [main, master, 'codex/**']
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      live_tests:
+        description: Run the live Trendyol Selenium and Karate scenarios
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: |
+            pom.xml
+            karate-ui/pom.xml
+      - name: Unit tests
+        run: mvn -B -ntp clean test
+      - name: Cucumber step mapping (dry-run, no browser execution)
+        run: >-
+          mvn -B -ntp test -Dtest=EcommerceIT -Dcucumber.execution.dry-run=true
+          '-Dcucumber.plugin=pretty,html:target/cucumber-step-mapping.html,json:target/cucumber-step-mapping.json'
+      - name: Find Chrome
+        run: |
+          chrome="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          test -n "$chrome"
+          echo "CHROME_BINARY=$chrome" >> "$GITHUB_ENV"
+          "$chrome" --version
+      - name: Karate browser smoke against local fixture
+        run: >-
+          mvn -B -ntp -f karate-ui/pom.xml test -Dtest=SetupRunner
+          -Dheadless=true "-Dchrome.executable=$CHROME_BINARY"
+      - name: Live Selenium scenarios (optional)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.live_tests }}
+        run: >-
+          xvfb-run -a mvn -B -ntp test -Dtest=EcommerceIT
+          '-Dcucumber.plugin=pretty,html:target/selenium-live.html,json:target/selenium-live.json'
+      - name: Live Karate scenarios (optional)
+        if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' && inputs.live_tests }}
+        run: >-
+          mvn -B -ntp -f karate-ui/pom.xml test -Dtest=TestRunner
+          -Dheadless=true "-Dchrome.executable=$CHROME_BINARY"
+      - name: Explain report scope
+        if: always()
+        run: |
+          echo '## Test evidence' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Download test-reports below for Surefire XML and Karate HTML/screenshots.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'cucumber-step-mapping.html is a dry-run report, not proof of live Trendyol behavior.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Live tests run only when selected via workflow_dispatch. Check individual step conclusions.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload reports even when tests fail
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            target/surefire-reports/
+            target/cucumber-step-mapping.*
+            target/selenium-live.*
+            karate-ui/target/surefire-reports/
+            karate-ui/target/karate-reports/
