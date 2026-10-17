@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** General price parsing for the planned e-commerce price checks. */
 public final class TurkishPrice {
     private TurkishPrice() {}
     public static BigDecimal parse(String raw) {

@@ -16,7 +16,6 @@ public class HomePage {
     private final By searchField;
     private final By categoryMenu;
 
-    // XPath seçicileri bu sınıfta tutulur. Site değişirse burada güncelle.
     private final By errorMessage = By.xpath(
         "//*[@role='alert' or @data-testid='error-message'][" +
         "contains(., 'Bir hata oluştu') or contains(., 'Something went wrong') " +
