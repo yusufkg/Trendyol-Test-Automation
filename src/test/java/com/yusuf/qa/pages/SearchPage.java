@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.yusuf.qa.pricing.TurkishPrice;
 
-/** Guest search only; each site's selectors are kept together. */
 public class SearchPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
@@ -55,7 +54,6 @@ public class SearchPage {
                 }
                 for (WebElement button : d.findElements(By.xpath(
                         "//button[@data-testid='suggestion-placeholder'] | //input[@data-test-id='search-bar-input' and contains(@class, 'initialComponent')]"))) {
-                    // The placeholder input is not editable; its wrapper activates the real search component.
                     if ("input".equalsIgnoreCase(button.getTagName())) button = button.findElement(By.xpath(".."));
                     if (button.isDisplayed() && button.isEnabled()) button.click();
                 }

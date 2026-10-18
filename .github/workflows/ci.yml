@@ -61,6 +61,15 @@ jobs:
           echo 'Download test-reports below for Surefire XML and Karate HTML/screenshots.' >> "$GITHUB_STEP_SUMMARY"
           echo 'cucumber-step-mapping.html is a dry-run report, not proof of live Trendyol behavior.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Live tests run only when selected via workflow_dispatch. Check individual step conclusions.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Prepare public report site
+        if: ${{ success() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
+        shell: pwsh
+        run: ./scripts/build-report-site.ps1
+      - name: Upload Pages content
+        if: ${{ success() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: target/report-site
       - name: Upload reports even when tests fail
         if: always()
         uses: actions/upload-artifact@v4
@@ -74,3 +83,24 @@ jobs:
             target/selenium-live.*
             karate-ui/target/surefire-reports/
             karate-ui/target/karate-reports/
+
+  publish-reports:
+    needs: verify
+    if: ${{ success() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: report-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Publish HTML reports
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -13,7 +13,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-/** XPath is supplied directly by the Gherkin step. */
 public class XPathSteps {
     private WebDriverWait waitForElement() {
         WebDriver driver = TestContext.driver();

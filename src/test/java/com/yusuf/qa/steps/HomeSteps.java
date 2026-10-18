@@ -12,7 +12,6 @@ public class HomeSteps {
 
     @Given("I start a new guest session in a supported browser")
     public void startGuestSession() {
-        // Feature Background zaten yeni Chrome açmışsa aynı oturumu kullan.
         if (TestContext.driver() == null) TestContext.open();
         String site = System.getProperty("qa.site", "Trendyol");
         homePage = new HomePage(TestContext.driver(), site);
