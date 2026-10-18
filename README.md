@@ -61,6 +61,8 @@ Raporlar başarısızlıkta da toplanır ve 14 gün saklanır. Badge gerçek Act
 
 ## Mimari ve kaynak kod
 
+GitHub Pages rapor yayımlama adımı hazırlanmıştır. Yalnızca main dalındaki başarılı standart CI koşularının raporlarını yayımlar; canlı test raporlarını yayımlamaz. Etkinleştirme ve doğrulama adımları: [Rapor yayımlama](docs/report-publication.md). Henüz başarılı uzak deployment doğrulanmadığı için CD tamamlandı olarak gösterilmez.
+
 [Mimari açıklaması ve şema](docs/architecture.md).
 
 ```text
