@@ -51,14 +51,39 @@ Feature: Trendyol guest navigation - numbered scenarios
     And retry().waitFor(categories)
     And screenshot()
 
-  @planned @guest @TC-003 @navigation
-  Scenario: I open the category menu
-    Given I have opened the home page
-    And I have selected a menu with subcategories in the test data
-    When I open the category menu using its supported interaction
-    Then I verify the subcategory options are visible
-    When I click an existing subcategory
-    Then I verify the selected subcategory page is displayed
+  @guest @TC-003 @navigation
+  Scenario: TC-003 - I open the category menu
+    * dismissOverlays()
+    And retry().waitFor(locators.categoryMenuButton)
+    * text openCategoryMenu =
+    """
+    (function() {
+      var find = function(xpath) { return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue; };
+      var reject = find("//*[@id='onetrust-reject-all-handler']");
+      if (reject && reject.getClientRects().length) reject.click();
+      var close = find("//*[contains(concat(' ', normalize-space(@class), ' '), ' modal-section-close ')]");
+      if (close && close.getClientRects().length) close.click();
+      var button = find("//button[contains(concat(' ', normalize-space(@class), ' '), ' category-tab-wrapper ')]");
+      if (!button || !button.getClientRects().length) return false;
+      if (button.getAttribute('aria-expanded') === 'true') return true;
+      button.click();
+      return false;
+    })()
+    """
+    When waitUntil(openCategoryMenu)
+    Then retry().waitFor(locators.categoryMenuExpanded)
+    And retry().waitFor(locators.dressSubcategory)
+    And match script(locators.dressSubcategory, '_.getClientRects().length > 0') == true
+    * def expectedPath = attribute(locators.dressSubcategory, 'href')
+    And match expectedPath == locators.dressCategoryPath
+    When click(locators.dressSubcategory)
+    Then waitUntil("window.location.pathname === '" + expectedPath + "'")
+    And retry().waitFor(locators.searchHeading)
+    * def heading = text(locators.searchHeading).toLowerCase()
+    And match heading contains 'elbise'
+    And retry().waitFor(locators.productCards)
+    And match script(locators.productCards, '_.getClientRects().length > 0') == true
+    And screenshot()
 
   @planned @guest @TC-004 @navigation
   Scenario: I use browser Back and Forward
@@ -91,7 +116,10 @@ Feature: Trendyol guest navigation - numbered scenarios
     """
     When waitUntil(activateSearch)
     And retry().waitFor(locators.searchInput)
-    And input(locators.searchInput, query + Key.ENTER)
+    And input(locators.searchInput, query)
+    And match script(locators.searchInput, '_.value') == query
+    * dismissOverlays()
+    And input(locators.searchInput, Key.ENTER)
     Then waitUntil("window.location.pathname === '/sr'")
     And retry().waitFor(locators.searchHeading)
     * def actualQuery = decodeURIComponent(driver.url.split('q=')[1].split('&')[0].replace(/\+/g, ' '))
