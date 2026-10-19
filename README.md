@@ -10,10 +10,11 @@ Java ile misafir e-ticaret akışlarını doğrulayan test otomasyon portföyü.
 |---|---|---|
 | TC-001: Ana sayfa kontrolleri | Uygulandı | Uygulandı |
 | TC-002: Kategori sayfasından logoyla ana sayfaya dönüş | Uygulandı | Uygulandı |
+| TC-003: Kategori menüsünden Elbise alt kategorisine geçiş | Planlı | Uygulandı |
 | TC-005: Geçerli ürün arama | Planlı | Uygulandı |
 | TC-024: Ürün detay doğrulaması | Uygulandı | Planlı |
 
-48 senaryo, 48 başarılı otomasyon anlamına gelmez. Selenium kataloğunda 3 uygulanmış, 45 planlı senaryo vardır. Karate'de TC-001, TC-002 ve TC-005 uygulanmıştır. `@planned` senaryolar varsayılan koşuya dahil edilmez.
+48 senaryo, 48 başarılı otomasyon anlamına gelmez. Selenium kataloğunda 3 uygulanmış, 45 planlı senaryo vardır. Karate'de TC-001, TC-002, TC-003 ve TC-005 uygulanmıştır; diğer 44 senaryo planlıdır. `@planned` senaryolar varsayılan koşuya dahil edilmez.
 
 Trendyol login ve Samsung S20 alışveriş akışı kapsamda değildir. Bu sürümde SQL logger ve SQL plugin bulunmamaktadır; eski sürümlere ait SQL sonuçları güncel özellik olarak sunulmaz.
 
@@ -35,7 +36,7 @@ mvn test '-Dtest=EcommerceIT' '-Dcucumber.execution.dry-run=true'
 # Yerel örnek sayfada headless Chrome; Trendyol'a bağlanmaz
 mvn -f karate-ui/pom.xml test '-Dtest=SetupRunner' '-Dheadless=true'
 
-# 3 Karate senaryosu; canlı Trendyol
+# 4 Karate senaryosu; canlı Trendyol
 .\scripts\run-karate.ps1 -OpenReport
 
 # Selenium TC-002; canlı Trendyol
@@ -61,7 +62,7 @@ Raporlar başarısızlıkta da toplanır ve 14 gün saklanır. Badge gerçek Act
 
 ## Mimari ve kaynak kod
 
-GitHub Pages rapor yayımlama adımı hazırlanmıştır. Yalnızca main dalındaki başarılı standart CI koşularının raporlarını yayımlar; canlı test raporlarını yayımlamaz. Etkinleştirme ve doğrulama adımları: [Rapor yayımlama](docs/report-publication.md). Henüz başarılı uzak deployment doğrulanmadığı için CD tamamlandı olarak gösterilmez.
+GitHub Pages rapor yayımlaması, `67192df` commit'inin [başarılı ana dal koşusunda](https://github.com/yusufkg/Trendyol-Test-Automation/actions/runs/39100021848) doğrulandı. [Rapor sitesi](https://yusufkg.github.io/Trendyol-Test-Automation/) yalnızca main dalındaki başarılı standart CI koşularının raporlarını yayımlar; canlı test raporlarını yayımlamaz. Bu, test raporlarının otomatik dağıtımıdır; Trendyol uygulamasının production dağıtımı değildir. Ayrıntılar: [Rapor yayımlama](docs/report-publication.md).
 
 [Mimari açıklaması ve şema](docs/architecture.md).
 
@@ -71,7 +72,7 @@ src/test/java/com/yusuf/qa/runners/                Cucumber runner
 src/test/java/com/yusuf/qa/steps/                  Gherkin → Java adımları
 src/test/java/com/yusuf/qa/pages/                  Sayfa işlemleri ve XPath
 src/test/java/com/yusuf/qa/support/                Chrome yaşam döngüsü
-karate-ui/src/test/java/navigation/               Karate TC-001, TC-002, TC-005
+karate-ui/src/test/java/navigation/               Karate TC-001, TC-002, TC-003, TC-005
 karate-ui/src/test/java/common/locators.json       Ortak Karate XPath seçicileri
 karate-ui/src/test/java/setup/                    Dış servise bağlı olmayan örnek
 .github/workflows/ci.yml                          CI akışı ve rapor artifactleri
@@ -84,3 +85,5 @@ Cucumber'da `I click "XPath"` ortak Java adımıyla çalışır. Karate'de doğr
 17 Ekim 2026 tarihli yerel kontrol: 5 birim testi ve 3 Cucumber dry-run senaryosu geçti. Canlı Trendyol testleri bu kontrolün parçası değildir. CI'nin uzaktaki gerçek sonucu yukarıdaki Actions bağlantısından takip edilir; yerel bir kontrol uzak CI başarısı olarak gösterilmez.
 
 Karate smoke ve CI kanıtı: [doğrulama kaydı](docs/test-evidence.md).
+
+19 Ekim 2026 yerel canlı Chrome regresyonunda Karate TC-001, TC-002, TC-003 ve TC-005 birlikte geçti: 4 test, 0 hata. Bu sonuç henüz bu değişikliğin uzak CI veya Pages sonucu değildir.

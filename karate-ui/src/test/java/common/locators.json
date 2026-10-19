@@ -1,5 +1,9 @@
 {
   "homeUrl": "https://www.trendyol.com/",
+  "categoryMenuButton": "//button[contains(concat(' ', normalize-space(@class), ' '), ' category-tab-wrapper ')]",
+  "categoryMenuExpanded": "//button[contains(concat(' ', normalize-space(@class), ' '), ' category-tab-wrapper ') and @aria-expanded='true']",
+  "dressSubcategory": "//*[contains(concat(' ', normalize-space(@class), ' '), ' category-content-panel ')]//a[normalize-space(.)='Elbise' and @href='/elbise-x-c56']",
+  "dressCategoryPath": "/elbise-x-c56",
   "logo": "//a[@data-testid='navigation-logo-component']",
   "search": "//button[@data-testid='suggestion-placeholder'] | //input[@data-testid='browsing-search-input' or @data-testid='suggestion' or @type='search']",
   "categories": "//*[@data-testid='sections-wrapper']//a[@data-testid='section-item']",
