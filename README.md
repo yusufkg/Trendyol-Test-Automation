@@ -6,6 +6,8 @@ Java ile misafir e-ticaret akışlarını doğrulayan test otomasyon portföyü.
 
 ## Uygulanan kapsam
 
+48 kimliğin framework bazındaki durumu: [Senaryo durum tablosu](docs/scenario-status.md). Aşamalı geliştirme planı: [Yol haritası](docs/roadmap.md).
+
 | Senaryo | Selenium/Cucumber | Karate |
 |---|---|---|
 | TC-001: Ana sayfa kontrolleri | Uygulandı | Uygulandı |

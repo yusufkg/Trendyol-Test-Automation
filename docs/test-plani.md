@@ -1,13 +1,18 @@
 # Güncel test planı
 
-| Alan | Kontrol | Beklenen |
-|---|---|---|
-| Misafir arama | Trendyol / Hepsiburada üzerinde kablosuz mouse ara | Sorguyu içeren sonuç başlığı ve görünür ürün kartları. |
-| Ürün detay | TC-024: mouse aramasından ürün kartına tıkla | Ürün kimliği ve adı eşleşir; görsel ve fiyat görünür. |
-| Fiyat | Türkçe fiyat metnini ayrıştır | Sayısal fiyat doğru elde edilir; geçersiz metin reddedilir. |
-| Ürün kimliği | Ürün bağlantısını ayrıştır | Kart ve detay eşleştirmesinde kullanılacak kimlik elde edilir. |
-| Demo | Ayrı demo sitesinde örnek hesabıyla giriş | Başarı mesajı. |
+Framework bazlı kaynak durum tablosu: [48 senaryo durumu](scenario-status.md).
 
-Tek e-commerce.feature ve EcommerceIT runner kullanılır. Diğer 47 misafir senaryosu @planned etiketli tasarımdır. Çalıştırma komutları README.md içindedir.
+| Alan | Selenium | Karate | Beklenen |
+|---|---|---|---|
+| TC-001 ana sayfa | Uygulandı | Uygulandı | Sayfa ve temel element kontrolleri |
+| TC-002 navigasyon | Uygulandı | Uygulandı | Logoyla ana sayfaya dönüş |
+| TC-003 kategori menüsü | Planlı | Uygulandı | Görünür alt kategoriden doğru listeye geçiş |
+| TC-005 arama | Planlı | Uygulandı | URL sorgusu, başlık, ürün kartları ve örnek uygunluk kontrolü |
+| TC-024 ürün detay | Uygulandı | Planlı | Kimlik/ad eşleşmesi, yüklenmiş görsel ve pozitif fiyat |
+| Fiyat/ürün yardımcıları | 5 birim testi | Ayrı kapsam | Tarayıcı açmadan yardımcı kod doğrulaması |
 
-Trendyol hesap girişi ve Samsung S20 alışveriş akışı iptal edildi. SQL Server kayıtları ve otomatik HTML/görsel raporlama kaldırıldı. Sonuçlar terminal ve standart Maven test çıktılarından incelenir. Dry-run canlı tarayıcı davranışını doğrulamaz.
+Selenium 3 uygulanmış / 45 planlı; Karate 4 uygulanmış / 44 planlı. Diğer senaryoların test tasarımları hazırdır; uygulanmış sayılmaz. Çalıştırma komutları ana README.md dosyasındadır.
+
+CI: birim testleri, Cucumber dry-run ve yerel HTML fixture üzerinde headless Karate testi. Canlı Trendyol adımları ayrıca elle seçilir. Güncel PR koşusunda canlı adımlar çalışmamıştır. HTML raporları ve GitHub Pages rapor yayını vardır; SQL logger güncel kaynakta bulunmaz.
+
+Trendyol login ve Samsung S20 alışveriş akışı kapsamda değildir. API otomasyonu ve TestNG henüz uygulanmadı; tasarım ve aşamalar roadmap.md dosyasında izlenir.
