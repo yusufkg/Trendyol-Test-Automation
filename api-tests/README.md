@@ -1,28 +1,19 @@
-# API otomasyonu — tasarım aşaması
+# API otomasyonu
 
-Bu klasör henüz Maven modülü veya çalışan API testleri içermez. Sonraki küçük geliştirmede bağımsız POM ile RestAssured/TestNG kurulması planlanır. Ana Selenium ve Karate projelerinin bağımlılıkları değiştirilmeyecek.
+Java 17, RestAssured 6.1.0 ve TestNG 7.11.0 ile bağımsız Maven projesi.
 
-## Hedef yapı
-
-```text
-api-tests/
-  pom.xml
-  src/test/java/com/yusuf/qa/api/
-    fixture/LocalApiServer.java
-    tests/ProductApiTest.java
-  src/test/resources/testng.xml
+```powershell
+mvn -B -ntp -f api-tests/pom.xml clean test
 ```
 
-Yerel, testin başlatıp kapattığı bir örnek HTTP API tercih edilir. Dış demo servislerinin erişilebilirliği veya yazma kısıtları test sonucunu etkilemez. Bu, gerçek Trendyol API entegrasyonu olarak sunulmaz.
+- `src/test/java/com/yusuf/qa/api/fixture/LocalApiServer.java`: 127.0.0.1 üzerinde boş portta başlayan kontrollü HTTP API.
+- `src/test/java/com/yusuf/qa/api/tests/ProductApiTest.java`: TestNG yaşam döngüsü ve RestAssured doğrulamaları.
+- `target/surefire-reports/`: XML ve TestNG raporları.
 
-| Test | İstek | Beklenti |
-|---|---|---|
-| API-001 | GET /products | 200, JSON içerik türü ve liste alanları |
-| API-002 | GET /products/1 | 200, doğru ürün kimliği/adı |
-| API-003 | POST /products, geçerli gövde | 201, kimlik ve gönderilen alanlar; GET ile kalıcılık kontrolü |
-| API-004 | POST /products, geçersiz gövde | 400, beklenen hata alanları; yeni kayıt oluşmaması |
-| API-005 | GET /products/999 | 404, beklenen hata şeması |
+API-001 GET /products uygulandı: HTTP 200, JSON içerik türü, toplam, liste boyutu, ürün kimliği, adı ve fiyatı doğrulanır. Her test kendi sunucusunu başlatıp kapatır.
 
-Negatif veriler TestNG DataProvider ile çoğaltılabilir. Her test izole veriyle başlar; fixture teardown adımında kapatılır. Assertions yalnızca durum kodunu değil JSON alanlarını ve yazma davranışını da doğrular. Kendi fixture'ını sınamak gerçek bir ürün servisinin doğruluğunu kanıtlamaz; amaç API test otomasyonu mekaniklerini göstermektir.
+20 Ekim 2026 yerel Maven sonucu: 1 test, 0 başarısızlık, 0 hata, 0 atlanan; BUILD SUCCESS.
 
-TestNG smoke/regression grupları ve Surefire XML sonuçları sonraki aşamada eklenecek. POM ve testler oluşturulmadan hiçbir API başarı sonucu bildirilmeyecek.
+Gerçek Trendyol API entegrasyonu değildir. Ana Maven komutu, CI ve Pages bu projeyi henüz çalıştırmaz. Kendi fixture testimiz API otomasyonu mekaniklerini gösterir.
+
+Planlı: API-002 GET ürün detayı; API-003 geçerli POST ve kayıt kontrolü; API-004 geçersiz POST; API-005 bulunamayan ürün. DataProvider, smoke/regression grupları ve CI entegrasyonu sonraki aşamalardır.
