@@ -12,14 +12,16 @@ Güncel Maven projeleri Gauge kullanmaz. src/WebSteps.java, specs, env/default v
 
 ## Aşama 2 — Bağımsız API otomasyonu
 
-- [ ] api-tests/pom.xml ve modül kaynaklarını oluştur.
-- [ ] RestAssured ile kontrollü yerel API kur.
+- [x] api-tests/pom.xml ve modül kaynaklarını oluştur.
+- [x] RestAssured ile kontrollü yerel API kur.
 - [ ] GET/POST/negatif kapsamlı en az beş kontrat testi yaz.
 - [ ] API testlerini CI'a bağla ve artifact üret.
 
-Tasarım: ../api-tests/README.md. Şu an yalnızca tasarım belgesi vardır; API testi veya çalıştırılabilir Maven modülü henüz yoktur.
+Detaylar: ../api-tests/README.md. API-001 GET liste testi uygulandı ve 20 Ekim 2026 yerel Maven koşusunda geçti (1 test, 0 hata). Diğer dört test ve CI entegrasyonu planlıdır.
 
 ## Aşama 3 — TestNG
+
+API projesinde @Test, @BeforeMethod ve @AfterMethod uygulandı. @DataProvider ve grup seçimi henüz eklenmedi.
 
 - [ ] Ayrı API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider kullan.
 - [ ] smoke/regression gruplarını ve testng.xml seçimini doğrula.
