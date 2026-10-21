@@ -22,6 +22,12 @@ Trendyol login ve Samsung S20 alışveriş akışı kapsamda değildir. Bu sür�
 
 ## Teknolojiler
 
+Bağımsız `api-tests/` projesinde RestAssured 6.1.0 ve TestNG 7.11.0 ile ilk GET testi uygulandı. 20 Ekim 2026 yerel koşusunda 1 test geçti. Kontrollü yerel API kullanır; mevcut CI/Pages kapsamına henüz dahil değildir. [API kaynakları ve kalan testler](api-tests/README.md).
+
+```powershell
+mvn -B -ntp -f api-tests/pom.xml clean test
+```
+
 Java 17+, Maven, Selenium WebDriver 4.27.0, Cucumber 7.20.1, JUnit 4; ayrı Karate 1.5.2 / JUnit 5 projesi ve Chrome. Bağımlılıklar ilgili POM dosyalarında sabitlenmiştir.
 
 ## Hızlı başlangıç
