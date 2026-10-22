@@ -35,6 +35,19 @@ public class ProductApiTest {
         }
     }
 
+    @Test(description = "API-002 - GET product by ID returns the expected product")
+    public void getProductById() {
+        given().spec(request)
+                .pathParam("id", 1)
+                .when().get("/products/{id}")
+                .then().log().ifValidationFails()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body("id", equalTo(1))
+                .body("name", equalTo("Kablosuz Mouse"))
+                .body("price", equalTo(499.90f));
+    }
+
     @Test(description = "API-001 - GET products returns the expected product list")
     public void listProducts() {
         given().spec(request)

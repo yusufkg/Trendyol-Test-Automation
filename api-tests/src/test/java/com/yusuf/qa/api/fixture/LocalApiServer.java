@@ -15,13 +15,19 @@ public final class LocalApiServer implements AutoCloseable {
             try (exchange) {
                 int status;
                 String body;
-                if (!exchange.getRequestURI().getPath().equals("/products")) {
+                String path = exchange.getRequestURI().getPath();
+                if (!path.equals("/products") && !path.equals("/products/1")) {
                     status = 404;
                     body = "{\"error\":\"NOT_FOUND\"}";
                 } else if (!exchange.getRequestMethod().equals("GET")) {
                     status = 405;
                     exchange.getResponseHeaders().set("Allow", "GET");
                     body = "{\"error\":\"METHOD_NOT_ALLOWED\"}";
+                } else if (path.equals("/products/1")) {
+                    status = 200;
+                    body = """
+                            {"id":1,"name":"Kablosuz Mouse","price":499.90}
+                            """;
                 } else {
                     status = 200;
                     body = """

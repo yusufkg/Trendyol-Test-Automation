@@ -17,7 +17,7 @@ Güncel Maven projeleri Gauge kullanmaz. src/WebSteps.java, specs, env/default v
 - [ ] GET/POST/negatif kapsamlı en az beş kontrat testi yaz.
 - [ ] API testlerini CI'a bağla ve artifact üret.
 
-Detaylar: ../api-tests/README.md. API-001 GET liste testi uygulandı ve 20 Ekim 2026 yerel Maven koşusunda geçti (1 test, 0 hata). Diğer dört test ve CI entegrasyonu planlıdır.
+Detaylar: ../api-tests/README.md. API-001 GET liste ve API-002 GET ürün detay testleri uygulandı ve 21 Ekim 2026 yerel Maven koşusunda geçti (2 test, 0 hata). Diğer üç test ve CI entegrasyonu planlıdır.
 
 ## Aşama 3 — TestNG
 
