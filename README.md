@@ -22,7 +22,7 @@ Trendyol login ve Samsung S20 alışveriş akışı kapsamda değildir. Bu sür�
 
 ## Teknolojiler
 
-Bağımsız `api-tests/` projesinde RestAssured 6.1.0 ve TestNG 7.11.0 ile ürün listeleme ve ürün detay GET testleri uygulandı. 21 Ekim 2026 yerel koşusunda 2 test geçti. Kontrollü yerel API kullanır; mevcut CI/Pages kapsamına henüz dahil değildir. [API kaynakları ve kalan testler](api-tests/README.md).
+Bağımsız `api-tests/` projesinde RestAssured 6.1.0 ve TestNG 7.11.0 ile ürün listeleme, ürün detay ve POST oluşturma/GET kayıt kontrolü uygulandı. 22 Ekim 2026 yerel koşusunda 3 test geçti. Kontrollü yerel API kullanır; mevcut CI/Pages kapsamına henüz dahil değildir. [API kaynakları ve kalan testler](api-tests/README.md).
 
 ```powershell
 mvn -B -ntp -f api-tests/pom.xml clean test

@@ -13,6 +13,7 @@ import java.io.IOException;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class ProductApiTest {
     private LocalApiServer server;
@@ -33,6 +34,40 @@ public class ProductApiTest {
         if (server != null) {
             server.close();
         }
+    }
+
+    @Test(description = "API-003 - POST product persists it for subsequent GET requests")
+    public void createProduct() {
+        int id = given().spec(request)
+                .contentType(ContentType.JSON)
+                .body("""
+                        {"name":"Türkçe Klavye","price":899.50}
+                        """)
+                .when().post("/products")
+                .then().log().ifValidationFails()
+                .statusCode(201)
+                .contentType(ContentType.JSON)
+                .body("id", greaterThan(1))
+                .body("name", equalTo("Türkçe Klavye"))
+                .body("price", equalTo(899.50f))
+                .extract().path("id");
+
+        given().spec(request).pathParam("id", id)
+                .when().get("/products/{id}")
+                .then().log().ifValidationFails()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body("id", equalTo(id))
+                .body("name", equalTo("Türkçe Klavye"))
+                .body("price", equalTo(899.50f));
+
+        given().spec(request)
+                .when().get("/products")
+                .then().log().ifValidationFails()
+                .statusCode(200)
+                .body("total", equalTo(2))
+                .body("products", hasSize(2))
+                .body("products.find { it.id == " + id + " }.name", equalTo("Türkçe Klavye"));
     }
 
     @Test(description = "API-002 - GET product by ID returns the expected product")
