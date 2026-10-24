@@ -36,6 +36,38 @@ public class ProductApiTest {
         }
     }
 
+    @Test(description = "API-004 - Invalid product is rejected without changing stored products")
+    public void rejectInvalidProduct() {
+        Object productsBefore = given().spec(request)
+                .when().get("/products")
+                .then().statusCode(200)
+                .extract().jsonPath().getMap("$");
+
+        given().spec(request)
+                .contentType(ContentType.JSON)
+                .body("""
+                        {"name":"Geçersiz Ürün","price":-10}
+                        """)
+                .when().post("/products")
+                .then().log().ifValidationFails()
+                .statusCode(400)
+                .contentType(ContentType.JSON)
+                .body("error", equalTo("INVALID_PRODUCT"));
+
+        given().spec(request)
+                .when().get("/products")
+                .then().log().ifValidationFails()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body("$", equalTo(productsBefore));
+
+        given().spec(request).pathParam("id", 2)
+                .when().get("/products/{id}")
+                .then().log().ifValidationFails()
+                .statusCode(404)
+                .body("error", equalTo("NOT_FOUND"));
+    }
+
     @Test(description = "API-003 - POST product persists it for subsequent GET requests")
     public void createProduct() {
         int id = given().spec(request)
