@@ -12,7 +12,7 @@ mvn -B -ntp -f api-tests/pom.xml clean test
 
 API-001 GET /products uygulandı: HTTP 200, JSON içerik türü, toplam, liste boyutu, ürün kimliği, adı ve fiyatı doğrulanır. Her test kendi sunucusunu başlatıp kapatır.
 
-22 Ekim 2026 yerel Maven sonucu: 3 test, 0 başarısızlık, 0 hata, 0 atlanan; BUILD SUCCESS.
+23 Ekim 2026 yerel Maven sonucu: 4 test, 0 başarısızlık, 0 hata, 0 atlanan; BUILD SUCCESS.
 
 Gerçek Trendyol API entegrasyonu değildir. Ana Maven komutu, CI ve Pages bu projeyi henüz çalıştırmaz. Kendi fixture testimiz API otomasyonu mekaniklerini gösterir.
 
@@ -20,4 +20,6 @@ API-002 GET /products/1 uygulandı: pathParam ile gönderilen ürün kimliği, H
 
 API-003 POST /products uygulandı: 201 ve ürün alanları doğrulanır; dönen kimlikle GET yapılır, ürünün listede bulunduğu ve toplamın arttığı kontrol edilir. Kayıtlar yalnızca test sunucusunun belleğinde tutulur.
 
-Planlı: API-004 geçersiz POST; API-005 bulunamayan ürün. DataProvider, smoke/regression grupları ve CI entegrasyonu sonraki aşamalardır.
+API-004 geçersiz POST uygulandı: negatif fiyat için 400 ve INVALID_PRODUCT doğrulanır. İstek öncesi/sonrası ürün listesi karşılaştırılır ve yeni kimliğin 404 döndürdüğü kontrol edilir.
+
+Planlı: API-005 bulunamayan ürün. DataProvider, smoke/regression grupları ve CI entegrasyonu sonraki aşamalardır.
