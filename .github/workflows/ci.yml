@@ -56,17 +56,22 @@ jobs:
           -Dheadless=true "-Dchrome.executable=$CHROME_BINARY"
       - name: Explain report scope
         if: always()
+        env:
+          REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
         run: |
           echo '## Test evidence' >> "$GITHUB_STEP_SUMMARY"
           echo 'Download test-reports below for Surefire XML and Karate HTML/screenshots.' >> "$GITHUB_STEP_SUMMARY"
           echo 'cucumber-step-mapping.html is a dry-run report, not proof of live Trendyol behavior.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Live tests run only when selected via workflow_dispatch. Check individual step conclusions.' >> "$GITHUB_STEP_SUMMARY"
+          if [ "$REPOSITORY_PRIVATE" = "true" ]; then
+            echo 'Pages publication is skipped for private repositories; test-reports remains available as a workflow artifact.' >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Prepare public report site
-        if: ${{ success() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
+        if: ${{ success() && !github.event.repository.private && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
         shell: pwsh
         run: ./scripts/build-report-site.ps1
       - name: Upload Pages content
-        if: ${{ success() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
+        if: ${{ success() && !github.event.repository.private && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: target/report-site
@@ -86,7 +91,7 @@ jobs:
 
   publish-reports:
     needs: verify
-    if: ${{ success() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
+    if: ${{ success() && !github.event.repository.private && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
