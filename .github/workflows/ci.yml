@@ -2,7 +2,7 @@ name: Maven and Karate CI
 
 on:
   push:
-    branches: [main, master, 'codex/**']
+    branches: [main, master, 'feature/**']
   pull_request:
   workflow_dispatch:
     inputs:

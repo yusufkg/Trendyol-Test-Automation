@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -34,6 +35,22 @@ public class ProductApiTest {
         if (server != null) {
             server.close();
         }
+    }
+
+    @Test(description = "API-005 - Unknown product returns a JSON not-found response")
+    public void getUnknownProduct() {
+        given().spec(request).pathParam("id", 999)
+                .when().get("/products/{id}")
+                .then().log().ifValidationFails()
+                .statusCode(404)
+                .contentType(ContentType.JSON)
+                .body("$", equalTo(Map.of("error", "NOT_FOUND")));
+
+        given().spec(request).pathParam("id", 1)
+                .when().get("/products/{id}")
+                .then().log().ifValidationFails()
+                .statusCode(200)
+                .body("id", equalTo(1));
     }
 
     @Test(description = "API-004 - Invalid product is rejected without changing stored products")
