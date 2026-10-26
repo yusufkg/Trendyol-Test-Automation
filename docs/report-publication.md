@@ -6,6 +6,8 @@ CI'nin başarılı standart main koşusu, HTML rapor sitesini hazırlar. Ardınd
 
 Private depolarda Pages hazırlama ve yayımlama adımları atlanır; testler ve test-reports artifact yüklemesi devam eder. Bu durum job özetinde açıklanır. Public depolarda aşağıdaki Pages ayarı ayrıca yapılmalıdır. Bu koruma, Pages desteklemeyen private depolarda Not Found hatasını önler.
 
+Public depolarda yayımlama job'u önce Pages API erişimini kontrol eder. HTTP 404 durumunda yapılandırma ve deployment adımları atlanır; neden ve etkinleştirme yolu job özetine yazılır. Bu durum başarılı bir deployment anlamına gelmez. HTTP 403, 500 ve diğer beklenmeyen yanıtlar hata olarak korunur. Site etkinleştirildikten sonra job yeniden çalıştırılabilir.
+
 1. Değişiklikleri PR üzerinden main'e alın.
 2. Repository Settings → Pages → Build and deployment → Source alanında GitHub Actions seçin.
 3. Actions → Maven and Karate CI → Run workflow: main seçin; live_tests kapalı kalsın.
