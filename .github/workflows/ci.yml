@@ -133,8 +133,35 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Check Pages availability
+        id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          API_URL: ${{ github.api_url }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          status=$(curl --silent --show-error --output "$RUNNER_TEMP/pages-status.json" --write-out '%{http_code}' \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header 'Accept: application/vnd.github+json' \
+            "$API_URL/repos/$REPOSITORY/pages")
+          case "$status" in
+            200)
+              echo 'enabled=true' >> "$GITHUB_OUTPUT"
+              ;;
+            404)
+              echo 'enabled=false' >> "$GITHUB_OUTPUT"
+              echo '::notice::Pages site is unavailable. Enable Settings > Pages > Source > GitHub Actions to publish reports.'
+              echo 'Pages deployment skipped: site unavailable (HTTP 404). Test reports remain available as workflow artifacts. Enable Settings > Pages > Source > GitHub Actions, then rerun this job.' >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            *)
+              echo "::error::Pages availability check failed with HTTP $status."
+              exit 1
+              ;;
+          esac
       - name: Configure Pages
+        if: steps.pages.outputs.enabled == 'true'
         uses: actions/configure-pages@v5
       - name: Publish HTML reports
+        if: steps.pages.outputs.enabled == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
