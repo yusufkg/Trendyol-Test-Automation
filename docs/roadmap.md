@@ -15,15 +15,15 @@ Güncel Maven projeleri Gauge kullanmaz. src/WebSteps.java, specs, env/default v
 - [x] api-tests/pom.xml ve modül kaynaklarını oluştur.
 - [x] RestAssured ile kontrollü yerel API kur.
 - [x] GET/POST/negatif kapsamlı en az beş kontrat testi yaz.
-- [ ] API testlerinin CI job ve artifact yapılandırmasını uzak başarılı koşuyla doğrula.
+- [x] API testlerinin CI job ve artifact yapılandırmasını uzak başarılı koşuyla doğrula.
 
-Detaylar: ../api-tests/README.md. API-001 GET liste, API-002 GET ürün detay ve API-003 POST oluşturma/GET kayıt kontrolü uygulandı. API-004 negatif fiyat reddi ve kayıt oluşmaması kontrolü de eklendi. API-005 bulunamayan ürün testi de tamamlandı. 24 Ekim 2026 yerel Maven koşusunda beşi birlikte geçti (5 test, 0 hata). 26 Ekim 2026: bağımsız api-tests job ve api-test-reports artifact yapılandırması eklendi. Aynı Maven komutu yerelde 5 test geçti. Uzak koşu ve artifact henüz doğrulanmadığı için CI görevi açık tutulur.
+Detaylar: ../api-tests/README.md. API-001 GET liste, API-002 GET ürün detay ve API-003 POST oluşturma/GET kayıt kontrolü uygulandı. API-004 negatif fiyat reddi ve kayıt oluşmaması kontrolü de eklendi. API-005 bulunamayan ürün testi de tamamlandı. 24 Ekim 2026 yerel Maven koşusunda beşi birlikte geçti (5 test, 0 hata). 26 Ekim 2026: bağımsız api-tests job ve api-test-reports artifact yapılandırması eklendi. Aynı Maven komutu yerelde 5 test geçti. 27 Ekim kontrolünde CI koşusu 40276213865 için API job ve artifact yüklemesi başarılı olarak doğrulandı. Aynı koşuda Pages başarısızdır; tüm workflow başarılı olarak sunulmaz.
 
 ## Aşama 3 — TestNG
 
-API projesinde @Test, @BeforeMethod ve @AfterMethod uygulandı. @DataProvider ve grup seçimi henüz eklenmedi.
+API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider uygulandı. API-004 altı veriyle çalışır; 27 Ekim yerel koşusunda toplam 10 çalıştırma geçti. Bu yeni kapsamın uzak CI doğrulaması bekliyor. Grup seçimi henüz eklenmedi.
 
-- [ ] Ayrı API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider kullan.
+- [x] Ayrı API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider kullan.
 - [ ] smoke/regression gruplarını ve testng.xml seçimini doğrula.
 
 Mevcut JUnit/Selenium/Karate projeleri TestNG'ye dönüştürülmez.

@@ -26,7 +26,7 @@ Trendyol login ve Samsung S20 alışveriş akışı kapsamda değildir. Bu sür�
 |---|---|---|
 | Kök Maven projesi | Java 17+, Selenium 4.27.0, Cucumber 7.20.1, JUnit 4 | 5 birim testi ve 3 uygulanmış UI senaryosu |
 | `karate-ui/` | Karate 1.5.2, JUnit 5, Chrome | 4 uygulanmış UI senaryosu ve yerel tarayıcı fixture testi |
-| `api-tests/` | RestAssured 6.1.0, TestNG 7.11.0 | 5 yerel API testi |
+| `api-tests/` | RestAssured 6.1.0, TestNG 7.11.0 | 5 API senaryosu, DataProvider ile 10 çalıştırma |
 
 Bağımlılıklar ilgili POM dosyalarında sabitlenmiştir. Kök dizindeki `mvn test` diğer iki Maven projesini otomatik çalıştırmaz.
 
@@ -40,9 +40,9 @@ Bağımlılıklar ilgili POM dosyalarında sabitlenmiştir. Kök dizindeki `mvn 
 | API-004 | Geçersiz POST `/products` | 400, hata gövdesi ve kayıtların değişmemesi |
 | API-005 | GET `/products/999` | 404, tam JSON hata gövdesi ve mevcut ürüne erişim |
 
-Her test `127.0.0.1` üzerinde boş bir portta kendi HTTP sunucusunu açar ve sonunda kapatır. Veriler yalnızca test süresince bellekte tutulur. Bu testler gerçek Trendyol API'sini doğrulamaz. TestNG `@BeforeMethod` / `@AfterMethod` ile yaşam döngüsü yönetilir; DataProvider ve grup seçimi henüz planlıdır. [API projesi](api-tests/README.md).
+Her test `127.0.0.1` üzerinde boş bir portta kendi HTTP sunucusunu açar ve sonunda kapatır. Veriler yalnızca test süresince bellekte tutulur. Bu testler gerçek Trendyol API'sini doğrulamaz. TestNG `@BeforeMethod` / `@AfterMethod` ile yaşam döngüsü yönetilir; API-004, DataProvider ile altı geçersiz ürün verisi için çalışır. Grup seçimi henüz planlıdır. [API projesi](api-tests/README.md).
 
-26 Ekim 2026 yerel Maven sonucu: **5 test, 0 başarısızlık, 0 hata, 0 atlanan**.
+27 Ekim 2026 yerel Maven sonucu: **10 test çalıştırması, 0 başarısızlık, 0 hata, 0 atlanan**.
 
 ```powershell
 mvn -B -ntp -f api-tests/pom.xml clean test
@@ -88,7 +88,7 @@ mvn test '-Dtest=EcommerceIT' '-Dcucumber.filter.tags=@TC-002'
 
 Canlı testler için **Actions → Maven and Karate CI → Run workflow → live_tests** seçeneğini açın. Bu seçenek Selenium ve Karate'nin uygulanmış Trendyol senaryolarını ayrıca çalıştırır. Site değişikliği, ağ veya güvenlik engeli hataları başarıya çevrilmez.
 
-API job yapılandırması 26 Ekim 2026'da eklendi; bu belgenin hazırlandığı sırada uzak CI başarısı henüz doğrulanmadı. Push sonrası koşuda `RestAssured API tests` job sonucunu ayrıca kontrol edin.
+26 Ekim tarihli [CI koşusunda](https://github.com/yusufkg/Trendyol-Test-Automation/actions/runs/40276213865) API job ve api-test-reports artifact yüklemesi başarılıdır. Aynı koşunun Pages job başarısızlığı ayrı bir yayımlama sorunudur. Yeni DataProvider değişikliği yerelde doğrulandı; bu kapsamın uzak CI sonucu ayrıca kontrol edilmelidir.
 
 Bir koşuyu açın, adımların sonuçlarını inceleyin. **Artifacts → test-reports** UI/birim raporlarını; **api-test-reports** API sonuçlarını içerir. HTML raporlarını tüm destek dosyalarıyla birlikte çıkartın:
 
@@ -133,4 +133,4 @@ Karate smoke ve CI kanıtı: [doğrulama kaydı](docs/test-evidence.md).
 
 19 Ekim 2026 yerel canlı Chrome regresyonunda Karate TC-001, TC-002, TC-003 ve TC-005 birlikte geçti: 4 test, 0 hata. Bu sonuç henüz bu değişikliğin uzak CI veya Pages sonucu değildir.
 
-26 Ekim 2026 yerel API kontrolünde API-001–API-005 birlikte geçti. YAML sözdizimi, API çalıştırma komutu, başarısızlıkta artifact yükleme koşulu ve Pages job bağımlılığı yerelde kontrol edildi. Uzak CI koşusu ve artifact indirmesi sonraki doğrulama adımıdır.
+26 Ekim 2026 yerel API kontrolünde API-001–API-005 birlikte geçti. YAML sözdizimi, API çalıştırma komutu, başarısızlıkta artifact yükleme koşulu ve Pages job bağımlılığı yerelde kontrol edildi. 27 Ekim kontrolünde uzak API job başarısı ve artifact kaydı doğrulandı; artifact içeriği indirilmedi. DataProvider ile 10 çalıştırma yerelde geçti; bu yeni kapsam için uzak CI sonucu henüz yoktur.

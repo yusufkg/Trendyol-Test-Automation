@@ -1,6 +1,7 @@
 package com.yusuf.qa.api.tests;
 
 import com.yusuf.qa.api.fixture.LocalApiServer;
+import com.yusuf.qa.api.data.InvalidProductData;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -53,8 +54,9 @@ public class ProductApiTest {
                 .body("id", equalTo(1));
     }
 
-    @Test(description = "API-004 - Invalid product is rejected without changing stored products")
-    public void rejectInvalidProduct() {
+    @Test(description = "API-004 - Invalid product is rejected without changing stored products",
+            dataProvider = "invalidProducts", dataProviderClass = InvalidProductData.class)
+    public void rejectInvalidProduct(String caseName, String body) {
         Object productsBefore = given().spec(request)
                 .when().get("/products")
                 .then().statusCode(200)
@@ -62,9 +64,7 @@ public class ProductApiTest {
 
         given().spec(request)
                 .contentType(ContentType.JSON)
-                .body("""
-                        {"name":"Geçersiz Ürün","price":-10}
-                        """)
+                .body(body)
                 .when().post("/products")
                 .then().log().ifValidationFails()
                 .statusCode(400)
