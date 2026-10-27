@@ -27,7 +27,7 @@ jobs:
           java-version: '17'
           cache: maven
           cache-dependency-path: api-tests/pom.xml
-      - name: Run five local API contract tests
+      - name: Run local API contract tests
         run: mvn -B -ntp -f api-tests/pom.xml clean test
       - name: Explain API report scope
         if: always()
