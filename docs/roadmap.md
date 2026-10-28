@@ -21,10 +21,10 @@ Detaylar: ../api-tests/README.md. API-001 GET liste, API-002 GET ürün detay ve
 
 ## Aşama 3 — TestNG
 
-API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider uygulandı. API-004 altı veriyle çalışır; 27 Ekim yerel koşusunda toplam 10 çalıştırma geçti. Bu yeni kapsamın uzak CI doğrulaması bekliyor. Grup seçimi henüz eklenmedi.
+API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider uygulandı. API-004 altı veriyle çalışır; 27 Ekim yerel koşusunda toplam 10 çalıştırma geçti. Bu yeni kapsamın uzak CI doğrulaması bekliyor. 28 Ekim: smoke/regression grupları ve iki XML suite eklendi; smoke 3/3, regression 10/10 yerelde geçti.
 
 - [x] Ayrı API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider kullan.
-- [ ] smoke/regression gruplarını ve testng.xml seçimini doğrula.
+- [x] smoke/regression gruplarını ve testng.xml seçimini doğrula.
 
 Mevcut JUnit/Selenium/Karate projeleri TestNG'ye dönüştürülmez.
 

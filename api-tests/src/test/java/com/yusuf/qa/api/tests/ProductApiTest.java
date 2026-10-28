@@ -21,7 +21,7 @@ public class ProductApiTest {
     private LocalApiServer server;
     private RequestSpecification request;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void startApi() throws IOException {
         server = new LocalApiServer();
         request = new RequestSpecBuilder()
@@ -38,7 +38,7 @@ public class ProductApiTest {
         }
     }
 
-    @Test(description = "API-005 - Unknown product returns a JSON not-found response")
+    @Test(groups = "regression", description = "API-005 - Unknown product returns a JSON not-found response")
     public void getUnknownProduct() {
         given().spec(request).pathParam("id", 999)
                 .when().get("/products/{id}")
@@ -54,7 +54,7 @@ public class ProductApiTest {
                 .body("id", equalTo(1));
     }
 
-    @Test(description = "API-004 - Invalid product is rejected without changing stored products",
+    @Test(groups = "regression", description = "API-004 - Invalid product is rejected without changing stored products",
             dataProvider = "invalidProducts", dataProviderClass = InvalidProductData.class)
     public void rejectInvalidProduct(String caseName, String body) {
         Object productsBefore = given().spec(request)
@@ -85,7 +85,7 @@ public class ProductApiTest {
                 .body("error", equalTo("NOT_FOUND"));
     }
 
-    @Test(description = "API-003 - POST product persists it for subsequent GET requests")
+    @Test(groups = {"smoke", "regression"}, description = "API-003 - POST product persists it for subsequent GET requests")
     public void createProduct() {
         int id = given().spec(request)
                 .contentType(ContentType.JSON)
@@ -119,7 +119,7 @@ public class ProductApiTest {
                 .body("products.find { it.id == " + id + " }.name", equalTo("Türkçe Klavye"));
     }
 
-    @Test(description = "API-002 - GET product by ID returns the expected product")
+    @Test(groups = {"smoke", "regression"}, description = "API-002 - GET product by ID returns the expected product")
     public void getProductById() {
         given().spec(request)
                 .pathParam("id", 1)
@@ -132,7 +132,7 @@ public class ProductApiTest {
                 .body("price", equalTo(499.90f));
     }
 
-    @Test(description = "API-001 - GET products returns the expected product list")
+    @Test(groups = {"smoke", "regression"}, description = "API-001 - GET products returns the expected product list")
     public void listProducts() {
         given().spec(request)
                 .when().get("/products")
