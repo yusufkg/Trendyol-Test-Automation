@@ -40,9 +40,9 @@ Bağımlılıklar ilgili POM dosyalarında sabitlenmiştir. Kök dizindeki `mvn 
 | API-004 | Geçersiz POST `/products` | 400, hata gövdesi ve kayıtların değişmemesi |
 | API-005 | GET `/products/999` | 404, tam JSON hata gövdesi ve mevcut ürüne erişim |
 
-Her test `127.0.0.1` üzerinde boş bir portta kendi HTTP sunucusunu açar ve sonunda kapatır. Veriler yalnızca test süresince bellekte tutulur. Bu testler gerçek Trendyol API'sini doğrulamaz. TestNG `@BeforeMethod` / `@AfterMethod` ile yaşam döngüsü yönetilir; API-004, DataProvider ile altı geçersiz ürün verisi için çalışır. Grup seçimi henüz planlıdır. [API projesi](api-tests/README.md).
+Her test `127.0.0.1` üzerinde boş bir portta kendi HTTP sunucusunu açar ve sonunda kapatır. Veriler yalnızca test süresince bellekte tutulur. Bu testler gerçek Trendyol API'sini doğrulamaz. TestNG `@BeforeMethod` / `@AfterMethod` ile yaşam döngüsü yönetilir; API-004, DataProvider ile altı geçersiz ürün verisi için çalışır. Smoke grubu API-001/002/003 seçer (3 çalıştırma); varsayılan regression tüm kapsamı seçer (10 çalıştırma). [API projesi](api-tests/README.md).
 
-27 Ekim 2026 yerel Maven sonucu: **10 test çalıştırması, 0 başarısızlık, 0 hata, 0 atlanan**.
+28 Ekim 2026 yerel regression sonucu: **10 test çalıştırması, 0 başarısızlık, 0 hata, 0 atlanan**.
 
 ```powershell
 mvn -B -ntp -f api-tests/pom.xml clean test
@@ -134,3 +134,11 @@ Karate smoke ve CI kanıtı: [doğrulama kaydı](docs/test-evidence.md).
 19 Ekim 2026 yerel canlı Chrome regresyonunda Karate TC-001, TC-002, TC-003 ve TC-005 birlikte geçti: 4 test, 0 hata. Bu sonuç henüz bu değişikliğin uzak CI veya Pages sonucu değildir.
 
 26 Ekim 2026 yerel API kontrolünde API-001–API-005 birlikte geçti. YAML sözdizimi, API çalıştırma komutu, başarısızlıkta artifact yükleme koşulu ve Pages job bağımlılığı yerelde kontrol edildi. 27 Ekim kontrolünde uzak API job başarısı ve artifact kaydı doğrulandı; artifact içeriği indirilmedi. DataProvider ile 10 çalıştırma yerelde geçti; bu yeni kapsam için uzak CI sonucu henüz yoktur.
+
+## API smoke seçimi
+
+```powershell
+mvn -B -ntp -f api-tests/pom.xml clean test '-Dqa.suite=src/test/resources/testng-smoke.xml'
+```
+
+28 Ekim yerel doğrulama: smoke 3/3 ve varsayılan regression 10/10 başarılı. Suite dosyaları api-tests/src/test/resources/testng-smoke.xml ve testng.xml içindedir. CI mevcut komutuyla regression suite kullanır. Bu yeni suite değişikliğinin uzak CI sonucu henüz doğrulanmadı.
