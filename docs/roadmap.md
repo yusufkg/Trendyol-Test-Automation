@@ -2,7 +2,7 @@
 
 ## Aşama 1 — Mevcut kanıtları tutarlı tut
 
-- [x] Kaynaktaki 48 TC kimliğini ve @planned etiketlerini say; Selenium 3/45, Karate 4/44 durumunu belgelerle eşitle.
+- [x] Kaynaktaki 48 TC kimliğini ve @planned etiketlerini say; Selenium 4/44, Karate 4/44 durumunu belgelerle eşitle.
 - [x] Eski Gauge/Docker kullanımını kontrol et ve güncel akıştan ayrımını açıkla.
 - [x] Mevcut geliştirme commit'inin GitHub Actions sonuçlarını gerçek job adımlarından doğrula.
 
@@ -29,6 +29,8 @@ API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider uygulandı. A
 Mevcut JUnit/Selenium/Karate projeleri TestNG'ye dönüştürülmez.
 
 ## Aşama 4 — Kapsam ve portföy
+
+29 Ekim: ilk yeni Selenium senaryosu TC-005 uygulandı ve canlı Chrome üzerinde geçti. 3–5 yeni senaryo hedefinin 1'i tamamlandı; kalan hedef açıktır. Kanıt: evidence/selenium-tc005.md.
 
 - [ ] Seçilen framework'te 3–5 yeni kararlı UI senaryosu tamamla.
 - [ ] Yeni başarılı koşular için README kanıtlarını güncelle.

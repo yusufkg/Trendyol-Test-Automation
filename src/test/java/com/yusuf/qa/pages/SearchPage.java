@@ -8,6 +8,10 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
+import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import com.yusuf.qa.pricing.TurkishPrice;
 
 public class SearchPage {
@@ -40,7 +44,59 @@ public class SearchPage {
 
     public void open() { driver.get(home); assertAccessible(); dismissOverlays(); }
 
-    public void clickSearchField() { searchField().click(); }
+    public void clickSearchField() {
+        wait.until(d -> {
+            try {
+                searchField().click();
+                return true;
+            } catch (ElementClickInterceptedException | StaleElementReferenceException ignored) {
+                return false;
+            }
+        });
+    }
+
+    public boolean searchFieldAvailable() {
+        return searchField().isEnabled();
+    }
+
+    public boolean resultsPageDisplayed() {
+        return wait.until(d -> {
+            assertAccessible();
+            return URI.create(d.getCurrentUrl()).getPath().equals(
+                    home.contains("trendyol") ? "/sr" : "/ara");
+        });
+    }
+
+    public boolean queryMatches(String expected) {
+        return wait.until(d -> {
+            String query = URI.create(d.getCurrentUrl()).getRawQuery();
+            if (query == null) return false;
+            return Arrays.stream(query.split("&"))
+                    .map(part -> part.split("=", 2))
+                    .anyMatch(pair -> pair.length == 2 && pair[0].equals("q")
+                            && URLDecoder.decode(pair[1], StandardCharsets.UTF_8).equals(expected));
+        });
+    }
+
+    public List<String> visibleProductNames() {
+        return wait.until(d -> {
+            assertAccessible();
+            dismissOverlays();
+            try {
+                List<String> names = d.findElements(productCards).stream()
+                        .filter(WebElement::isDisplayed)
+                        .flatMap(card -> card.findElements(By.xpath(".//h2")).stream())
+                        .filter(WebElement::isDisplayed)
+                        .map(WebElement::getText)
+                        .filter(name -> !name.isBlank())
+                        .limit(5)
+                        .toList();
+                return names.isEmpty() ? null : names;
+            } catch (StaleElementReferenceException ignored) {
+                return null;
+            }
+        });
+    }
 
     public void enterSearchText(String query) {
         WebElement input = wait.until(d -> {

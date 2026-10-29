@@ -1,8 +1,8 @@
 # Senaryo uygulama durumu
 
-19 Ekim 2026 kaynak denetimi. Durum, ilgili feature dosyasındaki @planned etiketine göre belirlenmiştir; canlı testin her koşuda geçtiği anlamına gelmez. Her TC kimliği bir tasarımdır; Scenario Outline veri satırları ayrı TC sayılmaz.
+29 Ekim 2026 kaynak denetimi. Durum, ilgili feature dosyasındaki @planned etiketine göre belirlenmiştir; canlı testin her koşuda geçtiği anlamına gelmez. Her TC kimliği bir tasarımdır; Scenario Outline veri satırları ayrı TC sayılmaz.
 
-Selenium: 3 uygulanmış / 45 planlı. Karate: 4 uygulanmış / 44 planlı. Aynı TC iki framework içinde bulunabilir; sayılar toplanarak 7 farklı senaryo denmez.
+Selenium: 4 uygulanmış / 44 planlı. Karate: 4 uygulanmış / 44 planlı. Aynı TC iki framework içinde bulunabilir; sayılar toplanarak 8 farklı senaryo denmez.
 
 | Kimlik | Senaryo | Selenium/Cucumber | Karate |
 |---|---|---|---|
@@ -10,7 +10,7 @@ Selenium: 3 uygulanmış / 45 planlı. Karate: 4 uygulanmış / 44 planlı. Ayn�
 | TC-002 | I return to the home page using the logo | Uygulandı | Uygulandı |
 | TC-003 | I open the category menu | Planlı | Uygulandı |
 | TC-004 | I use browser Back and Forward | Planlı | Planlı |
-| TC-005 | I search with a valid keyword | Planlı | Uygulandı |
+| TC-005 | I search with a valid keyword | Uygulandı | Uygulandı |
 | TC-006 | I search by pressing Enter | Planlı | Planlı |
 | TC-007 | I search by clicking the search button | Planlı | Planlı |
 | TC-008 | I search for a term with no results | Planlı | Planlı |
