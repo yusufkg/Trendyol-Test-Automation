@@ -48,7 +48,7 @@ Feature: E-commerce test automation
       Then I verify the same product detail page is displayed
       And I verify no unexpected redirect or application error occurs
 
-    @planned @guest @TC-005 @smoke @search
+    @guest @TC-005 @smoke @search
     Scenario: I search with a valid keyword
       Given I have opened the home page
       And I verify the search field is visible and enabled

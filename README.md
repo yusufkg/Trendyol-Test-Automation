@@ -13,10 +13,10 @@ Java ile misafir e-ticaret akışlarını ve kontrollü bir örnek API'yi doğru
 | TC-001: Ana sayfa kontrolleri | Uygulandı | Uygulandı |
 | TC-002: Kategori sayfasından logoyla ana sayfaya dönüş | Uygulandı | Uygulandı |
 | TC-003: Kategori menüsünden Elbise alt kategorisine geçiş | Planlı | Uygulandı |
-| TC-005: Geçerli ürün arama | Planlı | Uygulandı |
+| TC-005: Geçerli ürün arama | Uygulandı | Uygulandı |
 | TC-024: Ürün detay doğrulaması | Uygulandı | Planlı |
 
-48 senaryo, 48 başarılı otomasyon anlamına gelmez. Selenium kataloğunda 3 uygulanmış, 45 planlı senaryo vardır. Karate'de TC-001, TC-002, TC-003 ve TC-005 uygulanmıştır; diğer 44 senaryo planlıdır. `@planned` senaryolar varsayılan koşuya dahil edilmez.
+48 senaryo, 48 başarılı otomasyon anlamına gelmez. Selenium kataloğunda 4 uygulanmış, 44 planlı senaryo vardır. Karate'de TC-001, TC-002, TC-003 ve TC-005 uygulanmıştır; diğer 44 senaryo planlıdır. `@planned` senaryolar varsayılan koşuya dahil edilmez.
 
 Trendyol login ve Samsung S20 alışveriş akışı kapsamda değildir. Bu sürümde SQL logger ve SQL plugin bulunmamaktadır; eski sürümlere ait SQL sonuçları güncel özellik olarak sunulmaz.
 
@@ -24,7 +24,7 @@ Trendyol login ve Samsung S20 alışveriş akışı kapsamda değildir. Bu sür�
 
 | Proje | Teknolojiler | Kapsam |
 |---|---|---|
-| Kök Maven projesi | Java 17+, Selenium 4.27.0, Cucumber 7.20.1, JUnit 4 | 5 birim testi ve 3 uygulanmış UI senaryosu |
+| Kök Maven projesi | Java 17+, Selenium 4.27.0, Cucumber 7.20.1, JUnit 4 | 5 birim testi ve 4 uygulanmış UI senaryosu |
 | `karate-ui/` | Karate 1.5.2, JUnit 5, Chrome | 4 uygulanmış UI senaryosu ve yerel tarayıcı fixture testi |
 | `api-tests/` | RestAssured 6.1.0, TestNG 7.11.0 | 5 API senaryosu, DataProvider ile 10 çalıştırma |
 
@@ -58,7 +58,7 @@ Kök projenin 5 birim testi:
 mvn clean test
 ```
 
-Aktif 3 Selenium senaryosunun adım eşleşmesi; tarayıcı çalıştırılmaz:
+Aktif 4 Selenium senaryosunun adım eşleşmesi; tarayıcı çalıştırılmaz:
 
 ```powershell
 mvn test '-Dtest=EcommerceIT' '-Dcucumber.execution.dry-run=true'
@@ -126,6 +126,8 @@ api-tests/src/test/java/com/yusuf/qa/api/tests/    API-001–API-005 doğrulamal
 Cucumber'da `I click "XPath"` ortak Java adımıyla çalışır. Karate'de doğrudan `click()`, `input()`, `waitFor()` ve `match` kullanılır; Java Step Definition gerekmez. Her senaryoda yeni Chrome oturumu kullanılır ve sonunda kapatılır.
 
 ## Doğrulama durumu
+
+29 Ekim 2026: Selenium TC-005 canlı Chrome koşusunda geçti (1 senaryo, 0 hata). Selenium kataloğu 4 uygulanmış / 44 planlıdır. Diğer üç Selenium senaryosunun canlı sonuçları bu koşuda yenilenmedi. [TC-005 komutu, ölçütü ve test kaydı](docs/evidence/selenium-tc005.md).
 
 17 Ekim 2026 tarihli yerel kontrol: 5 birim testi ve 3 Cucumber dry-run senaryosu geçti. Canlı Trendyol testleri bu kontrolün parçası değildir. CI'nin uzaktaki gerçek sonucu yukarıdaki Actions bağlantısından takip edilir; yerel bir kontrol uzak CI başarısı olarak gösterilmez.
 
