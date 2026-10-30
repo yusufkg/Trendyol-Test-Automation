@@ -27,4 +27,4 @@ Kullanıcının paylaştığı 48 test tasarımı, 12 gruba ayrılmıştır. Her
 
 
 
-Güncel uygulama durumu: Selenium 4 uygulanmış / 44 planlı, Karate 4 uygulanmış / 44 planlı. HTML raporları ve GitHub Pages rapor yayını mevcuttur; SQL entegrasyonu güncel sürümde yoktur. Bu belge test tasarımını anlatır; kanıt ve framework bazlı durum için docs/scenario-status.md esas alınır.
+Güncel uygulama durumu: Selenium 5 uygulanmış / 43 planlı, Karate 4 uygulanmış / 44 planlı. HTML raporları ve GitHub Pages rapor yayını mevcuttur; SQL entegrasyonu güncel sürümde yoktur. Bu belge test tasarımını anlatır; kanıt ve framework bazlı durum için docs/scenario-status.md esas alınır.

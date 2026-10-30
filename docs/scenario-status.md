@@ -1,14 +1,14 @@
 # Senaryo uygulama durumu
 
-29 Ekim 2026 kaynak denetimi. Durum, ilgili feature dosyasındaki @planned etiketine göre belirlenmiştir; canlı testin her koşuda geçtiği anlamına gelmez. Her TC kimliği bir tasarımdır; Scenario Outline veri satırları ayrı TC sayılmaz.
+30 Ekim 2026 kaynak denetimi. Durum, ilgili feature dosyasındaki @planned etiketine göre belirlenmiştir; canlı testin her koşuda geçtiği anlamına gelmez. Her TC kimliği bir tasarımdır; Scenario Outline veri satırları ayrı TC sayılmaz.
 
-Selenium: 4 uygulanmış / 44 planlı. Karate: 4 uygulanmış / 44 planlı. Aynı TC iki framework içinde bulunabilir; sayılar toplanarak 8 farklı senaryo denmez.
+Selenium: 5 uygulanmış / 43 planlı. Karate: 4 uygulanmış / 44 planlı. Aynı TC iki framework içinde bulunabilir; sayılar toplanarak 9 farklı senaryo denmez.
 
 | Kimlik | Senaryo | Selenium/Cucumber | Karate |
 |---|---|---|---|
 | TC-001 | I open the Trendyol home page successfully using XPath | Uygulandı | Uygulandı |
 | TC-002 | I return to the home page using the logo | Uygulandı | Uygulandı |
-| TC-003 | I open the category menu | Planlı | Uygulandı |
+| TC-003 | I open the category menu | Uygulandı | Uygulandı |
 | TC-004 | I use browser Back and Forward | Planlı | Planlı |
 | TC-005 | I search with a valid keyword | Uygulandı | Uygulandı |
 | TC-006 | I search by pressing Enter | Planlı | Planlı |
