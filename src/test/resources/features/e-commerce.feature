@@ -29,7 +29,7 @@ Feature: E-commerce test automation
       And I verify "//button[@data-testid='suggestion-placeholder'] | //input[@data-testid='browsing-search-input' or @data-testid='suggestion' or @type='search']" is visible
       And I verify "//*[@data-testid='sections-wrapper']//a[@data-testid='section-item']" is visible
 
-    @planned @guest @TC-003 @navigation
+    @guest @TC-003 @navigation
     Scenario: I open the category menu
       Given I have opened the home page
       And I have selected a menu with subcategories in the test data
