@@ -50,6 +50,33 @@ public class SearchSteps {
         page().pressEnter();
     }
 
+    @Given("I use the no-results search term {string}")
+    public void selectNoResultsQuery(String term) {
+        query = System.getProperty("qa.search.noResults", term);
+        if (query.isBlank()) throw new IllegalArgumentException("Sonuçsuz arama terimi boş olamaz");
+    }
+
+    @When("I enter the no-results test term into the search field")
+    public void enterNoResultsQuery() {
+        if (query == null) throw new IllegalStateException("Önce sonuçsuz arama verisini seçin");
+        page().enterSearchText(query);
+    }
+
+    @Then("I verify the no-results message is displayed")
+    public void verifyNoResultsMessage() {
+        assertTrue("Sonuçsuz arama durumu doğrulanamadı: " + query, page().noResultsMessageVisible(query));
+    }
+
+    @Then("I verify no product cards for the query are listed")
+    public void verifyNoSearchProducts() {
+        assertTrue("Sorguyla eşleşen kart veya açıklanmayan öneri listesi bulundu", page().noSearchProductsVisible(query));
+    }
+
+    @Then("I verify no application error occurs")
+    public void verifyNoApplicationError() {
+        assertTrue("Uygulama hata mesajı görüntülendi", page().hasNoApplicationError());
+    }
+
     @Then("I verify the search results page is displayed")
     public void verifyResultsPage() {
         assertTrue("Arama sonuç sayfası açılmadı", page().resultsPageDisplayed());
