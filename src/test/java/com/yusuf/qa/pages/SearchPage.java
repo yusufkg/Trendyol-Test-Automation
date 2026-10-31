@@ -78,6 +78,52 @@ public class SearchPage {
         });
     }
 
+    public boolean noResultsMessageVisible(String query) {
+        resultsPageDisplayed();
+        queryMatches(query);
+        return wait.until(d -> {
+            assertAccessible();
+            dismissOverlays();
+            try {
+                return d.findElements(By.xpath("//*[self::h1 or self::h2 or self::p or self::span or self::div][contains(., 'bulunamad')]"))
+                        .stream().filter(WebElement::isDisplayed)
+                        .map(WebElement::getText)
+                        .map(text -> text.toLowerCase(Locale.forLanguageTag("tr")))
+                        .anyMatch(text -> text.contains("ürün bulunamad") || text.contains("sonuç bulunamad"));
+            } catch (StaleElementReferenceException ignored) {
+                return false;
+            }
+        });
+    }
+
+    public boolean noSearchProductsVisible(String query) {
+        String expected = query.toLowerCase(Locale.forLanguageTag("tr"));
+        return wait.until(d -> {
+            assertAccessible();
+            try {
+                List<WebElement> cards = d.findElements(productCards).stream()
+                        .filter(WebElement::isDisplayed).toList();
+                if (cards.isEmpty()) return true;
+                boolean recommendationsDisclosed = d.findElements(By.xpath(
+                        "//*[contains(., 'Aradığın ürün bulunamadı.') and contains(., 'Aşağıdakiler ilgini çekebilir.') and not(.//*[contains(., 'Aradığın ürün bulunamadı.') and contains(., 'Aşağıdakiler ilgini çekebilir.')])]"))
+                        .stream().anyMatch(WebElement::isDisplayed);
+                return recommendationsDisclosed && cards.stream().allMatch(card -> {
+                    List<WebElement> headings = card.findElements(By.xpath(".//h2"));
+                    return !headings.isEmpty() && headings.stream().noneMatch(heading ->
+                            heading.getText().toLowerCase(Locale.forLanguageTag("tr")).contains(expected));
+                });
+            } catch (StaleElementReferenceException ignored) {
+                return false;
+            }
+        });
+    }
+
+    public boolean hasNoApplicationError() {
+        assertAccessible();
+        return driver.findElements(By.xpath("//*[@role='alert' or @data-testid='error-message'][contains(., 'Bir hata oluştu') or contains(., 'Something went wrong') or contains(., 'Beklenmeyen bir hata')]"))
+                .stream().noneMatch(WebElement::isDisplayed);
+    }
+
     public List<String> visibleProductNames() {
         return wait.until(d -> {
             assertAccessible();

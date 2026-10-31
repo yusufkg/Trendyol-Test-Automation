@@ -2,7 +2,7 @@
 
 ## Aşama 1 — Mevcut kanıtları tutarlı tut
 
-- [x] Kaynaktaki 48 TC kimliğini ve @planned etiketlerini say; Selenium 5/43, Karate 4/44 durumunu belgelerle eşitle.
+- [x] Kaynaktaki 48 TC kimliğini ve @planned etiketlerini say; Selenium 6/42, Karate 4/44 durumunu belgelerle eşitle.
 - [x] Eski Gauge/Docker kullanımını kontrol et ve güncel akıştan ayrımını açıkla.
 - [x] Mevcut geliştirme commit'inin GitHub Actions sonuçlarını gerçek job adımlarından doğrula.
 
@@ -30,11 +30,13 @@ Mevcut JUnit/Selenium/Karate projeleri TestNG'ye dönüştürülmez.
 
 ## Aşama 4 — Kapsam ve portföy
 
+31 Ekim: TC-008 sonuçsuz arama canlı Chrome koşusunda geçti. TC-005, TC-003 ve TC-008 ile en az 3 yeni Selenium senaryosu yerelde doğrulandı. Bunlar tek bir toplu canlı regresyon koşusu değildir; kararlılık için tekrarlar ayrıca değerlendirilmelidir. Kanıt: evidence/selenium-tc008.md.
+
 30 Ekim: TC-003 kategori-alt kategori geçişi Selenium ile tamamlandı ve canlı Chrome üzerinde geçti. Yeni Selenium senaryosu hedefinde TC-005 ve TC-003 olmak üzere 2 senaryo tamamlandı; 3–5 hedefi henüz tamamlanmadı. Kanıt: evidence/selenium-tc003.md.
 
 29 Ekim: ilk yeni Selenium senaryosu TC-005 uygulandı ve canlı Chrome üzerinde geçti. 3–5 yeni senaryo hedefinin 1'i tamamlandı; kalan hedef açıktır. Kanıt: evidence/selenium-tc005.md.
 
-- [ ] Seçilen framework'te 3–5 yeni kararlı UI senaryosu tamamla.
+- [x] Seçilen framework'te en az 3 yeni UI senaryosu uygula ve yerelde doğrula.
 - [ ] Yeni başarılı koşular için README kanıtlarını güncelle.
 - [ ] Yalnızca tamamlanmış çalışmaları CV ve LinkedIn'e ekle.
 

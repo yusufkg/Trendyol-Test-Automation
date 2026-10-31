@@ -79,10 +79,10 @@ Feature: E-commerce test automation
       Then I verify search results for "kulaklık" are displayed
       And I verify product cards are visible
 
-    @planned @guest @TC-008 @search @negative
+    @guest @TC-008 @search @negative
     Scenario: I search for a term with no results
       Given I have opened the home page
-      And I have a test term verified to return no results
+      And I use the no-results search term "qazxvbnmtesturun9473628105"
       When I click the search field
       And I enter the no-results test term into the search field
       And I press Enter
