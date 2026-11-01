@@ -14,7 +14,7 @@ API-001 GET /products uygulandı: HTTP 200, JSON içerik türü, toplam, liste b
 
 28 Ekim 2026 yerel regression sonucu: 10 test çalıştırması, 0 başarısızlık, 0 hata, 0 atlanan; BUILD SUCCESS.
 
-Gerçek Trendyol API entegrasyonu değildir. Ana Maven komutu bu bağımsız projeyi çalıştırmaz. CI yapılandırmasına ayrı api-tests job eklendi; raporlar api-test-reports artifact olarak 14 gün saklanacak. Başarısız testlerde de rapor yükleme adımı çalışır. API raporları Pages sitesine dahil edilmedi. 26 Ekim CI koşusu 40276213865 için API job ve artifact kaydı başarılı olarak doğrulandı; bu koşu DataProvider öncesindeki 5 çalıştırmayı kapsar. Yeni 10 çalıştırmalık kapsamın uzak CI sonucu ayrıca kontrol edilmelidir. Kendi fixture testimiz API otomasyonu mekaniklerini gösterir.
+Gerçek Trendyol API entegrasyonu değildir. Ana Maven komutu bu bağımsız projeyi çalıştırmaz. CI yapılandırmasına ayrı api-tests job eklendi; raporlar api-test-reports artifact olarak 14 gün saklanacak. Başarısız testlerde de rapor yükleme adımı çalışır. API raporları Pages sitesine dahil edilmedi. 26 Ekim CI koşusu 40276213865 için API job ve artifact kaydı başarılı olarak doğrulandı; bu koşu DataProvider öncesindeki 5 çalıştırmayı kapsar. 1 Kasım incelemesinde CI #55 (41204004405, commit e7d630b) API job logu 10 başarılı çalıştırma gösterdi; api-test-reports artifact kaydı mevcuttur. Kendi fixture testimiz API otomasyonu mekaniklerini gösterir.
 
 API-002 GET /products/1 uygulandı: pathParam ile gönderilen ürün kimliği, HTTP 200, JSON içerik türü, ürün adı ve fiyatı doğrulanır.
 
@@ -42,4 +42,6 @@ mvn -B -ntp -f api-tests/pom.xml clean test '-Dqa.suite=src/test/resources/testn
 
 Suite dosyaları src/test/resources/ altındadır. Hazırlık/kapanış metotları alwaysRun=true ile grup filtresinden bağımsız çalışır. İki suite de sıralı çalışır; paylaşılan test nesnesinde paralel çalışma yapılandırılmadı.
 
-28 Ekim yerel doğrulama: smoke 3/3, regression 10/10 başarılı. Surefire XML üzerinden smoke yöntem adları ve regression çalıştırma sayısı kontrol edildi. Son çalıştırma önceki target raporlarını yeniler. Bu değişikliğin uzak CI sonucu henüz doğrulanmadı.
+28 Ekim yerel doğrulama: smoke 3/3, regression 10/10 başarılı. Surefire XML üzerinden smoke yöntem adları ve regression çalıştırma sayısı kontrol edildi. Son çalıştırma önceki target raporlarını yeniler. Regression XML uzak CI #55 içinde 10/10 başarılıdır; smoke XML uzak koşuda ayrıca seçilmedi.
+
+1 Kasım 2026 yerel tekrar: smoke 3/3, regression 10/10 başarılı. Uzak CI kanıtı: https://github.com/yusufkg/Trendyol-Test-Automation/actions/runs/41204004405 . Artifact kaydı kontrol edildi; ZIP içeriği indirilmedi.

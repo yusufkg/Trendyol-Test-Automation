@@ -1,5 +1,9 @@
 # Test kanıtları — 17 Ekim 2026
 
+En yeni yerel kontrol: [1 Kasım toplu Selenium regresyonu ve API suite tekrarları](evidence/regression-2026-11-01.md).
+
+Bu bölüm tarihsel kayıttır. Daha yeni doğrulamalar: [CI #55](evidence/ci-2026-10-31.md), [Selenium TC-005](evidence/selenium-tc005.md), [Selenium TC-003](evidence/selenium-tc003.md), [Selenium TC-008](evidence/selenium-tc008.md).
+
 Bu kayıt yerel Windows ortamında gerçek komutlarla oluşturuldu. Uzak GitHub Actions başarısı veya canlı Trendyol sonucu olarak sunulmaz.
 
 | Kontrol | Sonuç | Kanıtladığı kapsam |
