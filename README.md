@@ -89,7 +89,7 @@ mvn test '-Dtest=EcommerceIT' '-Dcucumber.filter.tags=@TC-002'
 
 Canlı testler için **Actions → Maven and Karate CI → Run workflow → live_tests** seçeneğini açın. Bu seçenek Selenium ve Karate'nin uygulanmış Trendyol senaryolarını ayrıca çalıştırır. Site değişikliği, ağ veya güvenlik engeli hataları başarıya çevrilmez.
 
-26 Ekim tarihli [CI koşusunda](https://github.com/yusufkg/Trendyol-Test-Automation/actions/runs/40276213865) API job ve api-test-reports artifact yüklemesi başarılıdır. Aynı koşunun Pages job başarısızlığı ayrı bir yayımlama sorunudur. Yeni DataProvider değişikliği yerelde doğrulandı; bu kapsamın uzak CI sonucu ayrıca kontrol edilmelidir.
+26 Ekim tarihli [CI koşusunda](https://github.com/yusufkg/Trendyol-Test-Automation/actions/runs/40276213865) API job ve api-test-reports artifact yüklemesi başarılıdır. Aynı koşunun Pages job başarısızlığı ayrı bir yayımlama sorunudur. DataProvider ve regression XML kapsamı da [CI #55](https://github.com/yusufkg/Trendyol-Test-Automation/actions/runs/41204004405) job logunda 10 başarılı çalıştırma ile doğrulandı.
 
 Bir koşuyu açın, adımların sonuçlarını inceleyin. **Artifacts → test-reports** UI/birim raporlarını; **api-test-reports** API sonuçlarını içerir. HTML raporlarını tüm destek dosyalarıyla birlikte çıkartın:
 
@@ -128,6 +128,8 @@ Cucumber'da `I click "XPath"` ortak Java adımıyla çalışır. Karate'de doğr
 
 ## Doğrulama durumu
 
+1 Kasım 2026: TC-003, TC-005 ve TC-008 aynı yerel canlı Selenium regresyonunda geçti (3/3). API smoke 3/3, regression 10/10 tekrar geçti. [Yerel regresyon kaydı](docs/evidence/regression-2026-11-01.md). Kaynak e7d630b için [uzak CI #55](docs/evidence/ci-2026-10-31.md) de başarılıdır; uzak koşuda canlı Trendyol adımları çalıştırılmadı.
+
 31 Ekim 2026: Selenium TC-008 canlı Chrome koşusunda geçti (1 senaryo, 0 hata). Katalog 6 uygulanmış / 42 planlıdır. Sonuçsuz aramada öneriler, açık öneri mesajı ve görünür başlıklarda sorgu yokluğu ile doğrulanır. 5 birim testi ve 6 senaryonun dry-run kontrolü de geçti. [TC-008 test kaydı](docs/evidence/selenium-tc008.md).
 
 30 Ekim 2026: Selenium TC-003 canlı Chrome koşusunda geçti (1 senaryo, 0 hata). Güncel Selenium kataloğu 5 uygulanmış / 43 planlıdır. [TC-003 test kaydı](docs/evidence/selenium-tc003.md).
@@ -140,7 +142,7 @@ Karate smoke ve CI kanıtı: [doğrulama kaydı](docs/test-evidence.md).
 
 19 Ekim 2026 yerel canlı Chrome regresyonunda Karate TC-001, TC-002, TC-003 ve TC-005 birlikte geçti: 4 test, 0 hata. Bu sonuç henüz bu değişikliğin uzak CI veya Pages sonucu değildir.
 
-26 Ekim 2026 yerel API kontrolünde API-001–API-005 birlikte geçti. YAML sözdizimi, API çalıştırma komutu, başarısızlıkta artifact yükleme koşulu ve Pages job bağımlılığı yerelde kontrol edildi. 27 Ekim kontrolünde uzak API job başarısı ve artifact kaydı doğrulandı; artifact içeriği indirilmedi. DataProvider ile 10 çalıştırma yerelde geçti; bu yeni kapsam için uzak CI sonucu henüz yoktur.
+26 Ekim 2026 yerel API kontrolünde API-001–API-005 birlikte geçti. YAML sözdizimi, API çalıştırma komutu, başarısızlıkta artifact yükleme koşulu ve Pages job bağımlılığı yerelde kontrol edildi. 27 Ekim kontrolünde uzak API job başarısı ve artifact kaydı doğrulandı; artifact içeriği indirilmedi. DataProvider ile 10 çalıştırma yerelde geçti; bu kapsam 1 Kasım kontrolünde CI #55 üzerinden de doğrulandı.
 
 ## API smoke seçimi
 
@@ -148,4 +150,4 @@ Karate smoke ve CI kanıtı: [doğrulama kaydı](docs/test-evidence.md).
 mvn -B -ntp -f api-tests/pom.xml clean test '-Dqa.suite=src/test/resources/testng-smoke.xml'
 ```
 
-28 Ekim yerel doğrulama: smoke 3/3 ve varsayılan regression 10/10 başarılı. Suite dosyaları api-tests/src/test/resources/testng-smoke.xml ve testng.xml içindedir. CI mevcut komutuyla regression suite kullanır. Bu yeni suite değişikliğinin uzak CI sonucu henüz doğrulanmadı.
+28 Ekim yerel doğrulama: smoke 3/3 ve varsayılan regression 10/10 başarılı. Suite dosyaları api-tests/src/test/resources/testng-smoke.xml ve testng.xml içindedir. CI mevcut komutuyla regression suite kullanır. Regression suite için CI #55 başarılıdır; smoke XML seçimi yalnızca yerelde doğrulandı.

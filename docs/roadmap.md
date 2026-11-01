@@ -21,7 +21,7 @@ Detaylar: ../api-tests/README.md. API-001 GET liste, API-002 GET ürün detay ve
 
 ## Aşama 3 — TestNG
 
-API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider uygulandı. API-004 altı veriyle çalışır; 27 Ekim yerel koşusunda toplam 10 çalıştırma geçti. Bu yeni kapsamın uzak CI doğrulaması bekliyor. 28 Ekim: smoke/regression grupları ve iki XML suite eklendi; smoke 3/3, regression 10/10 yerelde geçti.
+API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider uygulandı. API-004 altı veriyle çalışır; 27 Ekim yerel koşusunda toplam 10 çalıştırma geçti. 1 Kasım incelemesinde e7d630b commit CI #55 API job logu 10/10 başarılıdır; artifact kaydı da doğrulandı. 28 Ekim: smoke/regression grupları ve iki XML suite eklendi; smoke 3/3, regression 10/10 yerelde geçti.
 
 - [x] Ayrı API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider kullan.
 - [x] smoke/regression gruplarını ve testng.xml seçimini doğrula.
@@ -30,6 +30,8 @@ Mevcut JUnit/Selenium/Karate projeleri TestNG'ye dönüştürülmez.
 
 ## Aşama 4 — Kapsam ve portföy
 
+1 Kasım: üç yeni Selenium senaryosu aynı yerel canlı koşuda birlikte geçti (TC-003, TC-005, TC-008; 3/3). API smoke 3/3 ve regression 10/10 tekrar doğrulandı. Kanıt: evidence/regression-2026-11-01.md. Altı aktif Selenium senaryosunun tamamı veya canlı Karate regresyonu bu kontrolün kapsamında değildir.
+
 31 Ekim: TC-008 sonuçsuz arama canlı Chrome koşusunda geçti. TC-005, TC-003 ve TC-008 ile en az 3 yeni Selenium senaryosu yerelde doğrulandı. Bunlar tek bir toplu canlı regresyon koşusu değildir; kararlılık için tekrarlar ayrıca değerlendirilmelidir. Kanıt: evidence/selenium-tc008.md.
 
 30 Ekim: TC-003 kategori-alt kategori geçişi Selenium ile tamamlandı ve canlı Chrome üzerinde geçti. Yeni Selenium senaryosu hedefinde TC-005 ve TC-003 olmak üzere 2 senaryo tamamlandı; 3–5 hedefi henüz tamamlanmadı. Kanıt: evidence/selenium-tc003.md.
@@ -37,7 +39,7 @@ Mevcut JUnit/Selenium/Karate projeleri TestNG'ye dönüştürülmez.
 29 Ekim: ilk yeni Selenium senaryosu TC-005 uygulandı ve canlı Chrome üzerinde geçti. 3–5 yeni senaryo hedefinin 1'i tamamlandı; kalan hedef açıktır. Kanıt: evidence/selenium-tc005.md.
 
 - [x] Seçilen framework'te en az 3 yeni UI senaryosu uygula ve yerelde doğrula.
-- [ ] Yeni başarılı koşular için README kanıtlarını güncelle.
+- [x] Yeni başarılı koşular için README kanıtlarını güncelle.
 - [ ] Yalnızca tamamlanmış çalışmaları CV ve LinkedIn'e ekle.
 
 Bir PR tek bir somut çıktıya odaklanır. Dört haftalık takvim hedeftir; kesin teslim tarihi değildir. Uygulanmamış framework veya senaryo portföyde tamamlanmış olarak gösterilmez.
