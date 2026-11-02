@@ -2,7 +2,7 @@
 
 ## Aşama 1 — Mevcut kanıtları tutarlı tut
 
-- [x] Kaynaktaki 48 TC kimliğini ve @planned etiketlerini say; Selenium 6/42, Karate 4/44 durumunu belgelerle eşitle.
+- [x] Kaynaktaki 48 TC kimliğini ve @planned etiketlerini say; Selenium 7/41, Karate 4/44 durumunu belgelerle eşitle.
 - [x] Eski Gauge/Docker kullanımını kontrol et ve güncel akıştan ayrımını açıkla.
 - [x] Mevcut geliştirme commit'inin GitHub Actions sonuçlarını gerçek job adımlarından doğrula.
 
@@ -29,6 +29,10 @@ API projesinde @Test, @BeforeMethod, @AfterMethod ve @DataProvider uygulandı. A
 Mevcut JUnit/Selenium/Karate projeleri TestNG'ye dönüştürülmez.
 
 ## Aşama 4 — Kapsam ve portföy
+
+2 Kasım: TC-010 sorgu değiştirme Selenium ile uygulandı ve tek-senaryo canlı koşusu geçti. Yeni Selenium kapsamı TC-003, TC-005, TC-008 ve TC-010 olmak üzere 4 senaryodur. Kanıt: evidence/selenium-tc010.md.
+
+Aynı gün ortak body metni okuma ve kategori başlığı görünürlük hataları giderildi. Nihai dört-senaryo canlı koşusu 4/4, birim testleri 5/5 ve dry-run 7/7 başarılıdır. İlk başarısız koşular test kaydında korunur. Uzak CI doğrulaması bekliyor.
 
 1 Kasım: üç yeni Selenium senaryosu aynı yerel canlı koşuda birlikte geçti (TC-003, TC-005, TC-008; 3/3). API smoke 3/3 ve regression 10/10 tekrar doğrulandı. Kanıt: evidence/regression-2026-11-01.md. Altı aktif Selenium senaryosunun tamamı veya canlı Karate regresyonu bu kontrolün kapsamında değildir.
 

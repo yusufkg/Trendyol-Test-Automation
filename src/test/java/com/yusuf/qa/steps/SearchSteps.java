@@ -15,6 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class SearchSteps {
     private SearchPage search;
     private String query;
+    private String previousQuery;
 
     private SearchPage page() {
         if (search == null) {
@@ -48,6 +49,31 @@ public class SearchSteps {
     @When("I press Enter")
     public void submitSearch() {
         page().pressEnter();
+    }
+
+    @When("I replace the search text with {string}")
+    public void replaceQuery(String replacement) {
+        previousQuery = page().searchText();
+        if (previousQuery == null || previousQuery.isBlank() || previousQuery.equals(replacement)) {
+            throw new IllegalStateException("Değiştirilecek farklı bir önceki sorgu bulunamadı");
+        }
+        enterQuery(replacement);
+    }
+
+    @Then("I verify the visible products satisfy the new query relevance criteria")
+    public void verifyNewQueryRelevance() {
+        assertTrue("Yeni sorgunun sonuçları yüklenmedi", page().resultsVisible(query));
+        Pattern criteria = Pattern.compile(System.getProperty("qa.search.replacementRelevance",
+                "(?iu)\\b(klavye(?:si|ler(?:i)?)?|keyboard)\\b"));
+        List<String> sample = page().visibleProductNames();
+        assertTrue("Yeni sorgu için ilk ürünler uygun değil: " + sample,
+                sample.stream().allMatch(name -> criteria.matcher(name).find()));
+    }
+
+    @Then("I verify the previous query result state is no longer shown")
+    public void verifyPreviousQueryCleared() {
+        if (previousQuery == null) throw new IllegalStateException("Önce arama sorgusunu değiştirin");
+        assertTrue("Önceki sorgu durumu sayfada kaldı", page().queryStateReplaced(previousQuery, query));
     }
 
     @Given("I use the no-results search term {string}")

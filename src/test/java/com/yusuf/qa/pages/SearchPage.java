@@ -59,6 +59,33 @@ public class SearchPage {
         return searchField().isEnabled();
     }
 
+    public String searchText() {
+        return searchField().getDomProperty("value");
+    }
+
+    public boolean queryStateReplaced(String previous, String expected) {
+        queryMatches(expected);
+        searchField();
+        return wait.until(d -> {
+            assertAccessible();
+            try {
+                boolean fieldUpdated = d.findElements(searchInput).stream().anyMatch(field ->
+                        field.isDisplayed() && expected.equals(field.getDomProperty("value")));
+                List<WebElement> headings = d.findElements(By.xpath("//h1")).stream()
+                        .filter(WebElement::isDisplayed).toList();
+                String oldQuery = previous.toLowerCase(Locale.forLanguageTag("tr"));
+                String newQuery = expected.toLowerCase(Locale.forLanguageTag("tr"));
+                return fieldUpdated && !headings.isEmpty()
+                        && headings.stream().anyMatch(heading -> heading.getText()
+                        .toLowerCase(Locale.forLanguageTag("tr")).contains(newQuery))
+                        && headings.stream().noneMatch(heading -> heading.getText()
+                        .toLowerCase(Locale.forLanguageTag("tr")).contains(oldQuery));
+            } catch (StaleElementReferenceException ignored) {
+                return false;
+            }
+        });
+    }
+
     public boolean resultsPageDisplayed() {
         return wait.until(d -> {
             assertAccessible();
@@ -275,10 +302,9 @@ public class SearchPage {
     }
 
     public void assertAccessible() {
-        for (WebElement body : driver.findElements(By.xpath("//body"))) {
-            String text = body.getText();
-            if (text.contains("Bağlantınız güvensiz") && text.contains("erişemiyorsunuz"))
-                throw new IllegalStateException("Siteye erişim güvenlik kontrolü tarafından engellendi.");
-        }
+        String text = String.valueOf(((JavascriptExecutor) driver).executeScript(
+                "return document.body ? document.body.innerText : ''"));
+        if (text.contains("Bağlantınız güvensiz") && text.contains("erişemiyorsunuz"))
+            throw new IllegalStateException("Siteye erişim güvenlik kontrolü tarafından engellendi.");
     }
 }
