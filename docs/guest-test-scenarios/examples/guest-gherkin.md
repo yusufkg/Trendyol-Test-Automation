@@ -511,4 +511,4 @@ Feature: Guest e-commerce product operations
 
 
 
-Güncel uygulama durumu: Selenium 6 uygulanmış / 42 planlı, Karate 4 uygulanmış / 44 planlı. HTML raporları ve GitHub Pages rapor yayını mevcuttur; SQL entegrasyonu güncel sürümde yoktur. Bu belge test tasarımını anlatır; kanıt ve framework bazlı durum için docs/scenario-status.md esas alınır.
+Güncel uygulama durumu: Selenium 7 uygulanmış / 41 planlı, Karate 4 uygulanmış / 44 planlı. HTML raporları ve GitHub Pages rapor yayını mevcuttur; SQL entegrasyonu güncel sürümde yoktur. Bu belge test tasarımını anlatır; kanıt ve framework bazlı durum için docs/scenario-status.md esas alınır.

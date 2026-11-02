@@ -5,6 +5,7 @@ import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URI;
@@ -12,6 +13,7 @@ import java.time.Duration;
 import java.util.Locale;
 
 public class CategoryMenuPage {
+    private final WebDriver driver;
     private final WebDriverWait wait;
     private final SearchPage search;
     private final By menu = By.xpath("//button[contains(concat(' ', normalize-space(@class), ' '), ' category-tab-wrapper ')]");
@@ -22,6 +24,7 @@ public class CategoryMenuPage {
         if (!site.equals("Trendyol")) {
             throw new IllegalArgumentException("Kategori menüsü senaryosu yalnızca Trendyol için uygulandı");
         }
+        this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         search = new SearchPage(driver, site);
     }
@@ -70,17 +73,26 @@ public class CategoryMenuPage {
     }
 
     public boolean selectedCategoryDisplayed() {
-        wait.until(d -> {
+        wait.withMessage(() -> "Kategori sayfası doğrulanamadı. URL: " + driver.getCurrentUrl()
+                + "; başlıklar: " + ((JavascriptExecutor) driver).executeScript(
+                "return Array.from(document.querySelectorAll('h1')).map(e=>e.innerText).join(' | ')"))
+                .until(d -> {
             search.assertAccessible();
             try {
                 URI actual = URI.create(d.getCurrentUrl());
-                return "www.trendyol.com".equals(actual.getHost()) && expectedPath.equals(actual.getPath())
-                        && d.findElements(By.xpath("//h1")).stream().anyMatch(heading -> heading.isDisplayed()
-                        && heading.getText().toLowerCase(Locale.forLanguageTag("tr")).contains("elbise"));
+                if (!"www.trendyol.com".equals(actual.getHost()) || !expectedPath.equals(actual.getPath())) return false;
+                search.dismissOverlays();
+                for (WebElement heading : d.findElements(By.xpath("//h1"))) {
+                    ((JavascriptExecutor) d).executeScript("arguments[0].scrollIntoView({block:'center'});", heading);
+                    if (heading.isDisplayed() && heading.getText()
+                            .toLowerCase(Locale.forLanguageTag("tr")).contains("elbise")) return true;
+                }
+                return false;
             } catch (StaleElementReferenceException ignored) {
                 return false;
             }
         });
         return !search.visibleProductNames().isEmpty();
     }
+
 }

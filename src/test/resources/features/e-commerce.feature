@@ -106,7 +106,7 @@ Feature: E-commerce test automation
         | gözlük      |
         | şarj cihazı |
 
-    @planned @guest @TC-010 @search
+    @guest @TC-010 @search
     Scenario: I replace the search query
       Given I have searched for "mouse"
       When I click the search field
