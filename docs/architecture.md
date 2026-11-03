@@ -17,7 +17,7 @@ flowchart TD
 
 Ana Maven projesi JUnit 4, Cucumber ve Selenium kullanır. Karate ayrı POM ile JUnit 5 çalıştırır. Bağımlılıklar ve test keşfi birbirinden ayrıdır.
 
-Selenium: e-commerce.feature → EcommerceIT → steps → pages/TestContext → Chrome. XPathSteps doğrudan Gherkin'den XPath alabilir. Hooks tarayıcı oturumunu kapatır.
+Selenium: e-commerce.feature → EcommerceIT → steps → pages/TestContext → Chrome. XPathSteps doğrudan Gherkin'den XPath alabilir. Hooks, ScenarioCleanup ile başarısızlıkta PNG'yi Cucumber raporuna ekler ve tarayıcı oturumunu kapatır; finally ile ThreadLocal temizlenir. Screenshot/attachment hatası asıl senaryo hatasını değiştirmez.
 
 Karate: TestRunner → navigation.feature → common/locators.json + karate-config.js → Chrome. Java Step Definition gerekmez. SetupRunner, Trendyol'a bağlanmadan fixture.html üzerinde input/click/assertion ve screenshot işlemlerini doğrular.
 
