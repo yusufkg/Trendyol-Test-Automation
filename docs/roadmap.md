@@ -30,6 +30,8 @@ Mevcut JUnit/Selenium/Karate projeleri TestNG'ye dönüştürülmez.
 
 ## Aşama 4 — Kapsam ve portföy
 
+3 Kasım: başarısız Selenium senaryoları için PNG rapor eki ve cleanup hata politikası eklendi. 11 birim testi, 7 dry-run ve boş Chrome üzerinde kasıtlı hata ile gerçek PNG attachment doğrulandı. Kanıt: evidence/failure-screenshots.md. Yeni kodun uzak CI sonucu bekliyor.
+
 2 Kasım: TC-010 sorgu değiştirme Selenium ile uygulandı ve tek-senaryo canlı koşusu geçti. Yeni Selenium kapsamı TC-003, TC-005, TC-008 ve TC-010 olmak üzere 4 senaryodur. Kanıt: evidence/selenium-tc010.md.
 
 Aynı gün ortak body metni okuma ve kategori başlığı görünürlük hataları giderildi. Nihai dört-senaryo canlı koşusu 4/4, birim testleri 5/5 ve dry-run 7/7 başarılıdır. İlk başarısız koşular test kaydında korunur. Uzak CI doğrulaması bekliyor.

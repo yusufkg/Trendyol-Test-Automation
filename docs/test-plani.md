@@ -12,6 +12,7 @@ Framework bazlı kaynak durum tablosu: [48 senaryo durumu](scenario-status.md).
 | TC-024 ürün detay | Uygulandı | Planlı | Kimlik/ad eşleşmesi, yüklenmiş görsel ve pozitif fiyat |
 | TC-010 sorgu değiştirme | Uygulandı | Planlı | Yeni URL/alan/başlık, eski sorgunun temizlenmesi ve örnek ürün uygunluğu |
 | Fiyat/ürün yardımcıları | 5 birim testi | Ayrı kapsam | Tarayıcı açmadan yardımcı kod doğrulaması |
+| Hata görüntüsü/cleanup | 6 birim testi | Ayrı kapsam | Screenshot ekleme sırası, capture/attach/quit hata politikası |
 
 Selenium 7 uygulanmış / 41 planlı; Karate 4 uygulanmış / 44 planlı. Diğer senaryoların test tasarımları hazırdır; uygulanmış sayılmaz. Çalıştırma komutları ana README.md dosyasındadır.
 

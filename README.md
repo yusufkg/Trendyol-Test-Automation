@@ -26,7 +26,7 @@ Trendyol login ve Samsung S20 alışveriş akışı kapsamda değildir. Bu sür�
 
 | Proje | Teknolojiler | Kapsam |
 |---|---|---|
-| Kök Maven projesi | Java 17+, Selenium 4.27.0, Cucumber 7.20.1, JUnit 4 | 5 birim testi ve 7 uygulanmış UI senaryosu |
+| Kök Maven projesi | Java 17+, Selenium 4.27.0, Cucumber 7.20.1, JUnit 4 | 11 birim testi ve 7 uygulanmış UI senaryosu |
 | `karate-ui/` | Karate 1.5.2, JUnit 5, Chrome | 4 uygulanmış UI senaryosu ve yerel tarayıcı fixture testi |
 | `api-tests/` | RestAssured 6.1.0, TestNG 7.11.0 | 5 API senaryosu, DataProvider ile 10 çalıştırma |
 
@@ -54,7 +54,7 @@ mvn -B -ntp -f api-tests/pom.xml clean test
 
 Java 17 veya üzeri ve Maven gerekir; UI testleri için Chrome da kurulu olmalıdır. Komutları proje kökünden PowerShell'de çalıştırın.
 
-Kök projenin 5 birim testi:
+Kök projenin 11 birim testi:
 
 ```powershell
 mvn clean test
@@ -104,6 +104,8 @@ Bir koşuyu açın, adımların sonuçlarını inceleyin. **Artifacts → test-r
 
 Raporlar başarısızlıkta da toplanır ve 14 gün saklanır. Badge gerçek Actions durumunu okur; sabit bir başarı rozeti değildir. Eski yerel kayıtlar yerine incelenen koşunun commit SHA ve tarihini esas alın.
 
+Başarısız Selenium senaryolarında tarayıcı kapanmadan önce PNG, failure-screenshot adıyla Cucumber HTML/JSON raporuna eklenir. Görüntü alınamasa bile cleanup denenir ve asıl senaryo hatası korunur. [Davranış, test kanıtı ve kullanım](docs/evidence/failure-screenshots.md).
+
 ## Mimari ve kaynak kod
 
 GitHub Pages yayını [18 Ekim tarihli koşuda](https://github.com/yusufkg/Trendyol-Test-Automation/actions/runs/39100021848) doğrulanmış tarihsel bir sonuçtur. Güncel workflow private depoda Pages hazırlama/yayımlama adımlarını atlar; artifact raporlaması devam eder. Public depoda Settings → Pages → Source → GitHub Actions ayarı gerekir. Yalnızca başarılı standart main koşuları yayımlanır; API ve isteğe bağlı canlı UI raporları artifact olarak kalır. Bu, raporların otomatik yayımlanmasıdır; Trendyol uygulamasının production dağıtımı değildir. [Pages ayarları](docs/report-publication.md).
@@ -128,6 +130,8 @@ api-tests/src/test/java/com/yusuf/qa/api/tests/    API-001–API-005 doğrulamal
 Cucumber'da `I click "XPath"` ortak Java adımıyla çalışır. Karate'de doğrudan `click()`, `input()`, `waitFor()` ve `match` kullanılır; Java Step Definition gerekmez. Her senaryoda yeni Chrome oturumu kullanılır ve sonunda kapatılır.
 
 ## Doğrulama durumu
+
+3 Kasım 2026: hata ekran görüntüsü/cleanup için 6 yeni test eklendi; kök birim testleri 11/11, dry-run 7/7 geçti. Boş gerçek Chrome sayfasındaki kasıtlı hata ile PNG'nin Cucumber JSON/HTML raporuna eklendiği doğrulandı. Bu tanılama canlı Trendyol testi değildir; uzak CI sonucu henüz doğrulanmadı.
 
 2 Kasım 2026: TC-010 sorgu değiştirme canlı Chrome koşusunda geçti. Ortak erişim ve kategori başlığı görünürlük kontrolleri düzeltildikten sonra TC-003/005/008/010 birlikte 4/4 geçti. Ayrıca 5 birim testi ve 7 senaryonun dry-run kontrolü başarılı. Katalog 7 uygulanmış / 41 planlıdır. İlk başarısız koşular ve düzeltmeler: [TC-010 test kaydı](docs/evidence/selenium-tc010.md).
 
