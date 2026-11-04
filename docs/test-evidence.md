@@ -1,8 +1,15 @@
-# Test kanıtları — 17 Ekim 2026
+# Test kanıtları
 
-En yeni yerel kontrol: [1 Kasım toplu Selenium regresyonu ve API suite tekrarları](evidence/regression-2026-11-01.md).
+| Doğrulama | Sonuç | Kayıt |
+|---|---|---|
+| Selenium hata raporu, 3 Kasım | 11 birim testi ve 7 dry-run senaryosu geçti. Kasıtlı XPath hatasında gerçek Chrome görüntüsü HTML ve JSON içinde doğrulandı. | [Hata ekran görüntüsü](evidence/failure-screenshots.md) |
+| Canlı Selenium, 2 Kasım | TC-003, TC-005, TC-008 ve TC-010 birlikte 4/4 geçti. | [Toplu Chrome koşusu](evidence/selenium-tc010.md) |
+| Yerel API, 1 Kasım | TestNG smoke 3/3, regresyon 10/10 geçti. RestAssured yerel test sunucusunu kullandı. | [API ve Selenium koşuları](evidence/regression-2026-11-01.md) |
+| GitHub Actions, 31 Ekim | API regresyonu, kök birim testleri, Cucumber dry-run ve yerel Karate Chrome testi başarılı. | [CI #55](evidence/ci-2026-10-31.md) |
 
-Bu bölüm tarihsel kayıttır. Daha yeni doğrulamalar: [CI #55](evidence/ci-2026-10-31.md), [Selenium TC-005](evidence/selenium-tc005.md), [Selenium TC-003](evidence/selenium-tc003.md), [Selenium TC-008](evidence/selenium-tc008.md).
+Canlı Selenium kayıtları koşulan senaryo kimliklerini gösterir. Cucumber dry-run adım eşleşmelerini kontrol eder. Karate smoke testi yerel HTML sayfasını kullanır.
+
+## Tarihsel yerel kayıt — 17 Ekim 2026
 
 Bu kayıt yerel Windows ortamında gerçek komutlarla oluşturuldu. Uzak GitHub Actions başarısı veya canlı Trendyol sonucu olarak sunulmaz.
 
