@@ -158,3 +158,14 @@ mvn -B -ntp -f api-tests/pom.xml clean test '-Dqa.suite=src/test/resources/testn
 ```
 
 28 Ekim yerel doğrulama: smoke 3/3 ve varsayılan regression 10/10 başarılı. Suite dosyaları api-tests/src/test/resources/testng-smoke.xml ve testng.xml içindedir. CI mevcut komutuyla regression suite kullanır. Regression suite için CI #55 başarılıdır; smoke XML seçimi yalnızca yerelde doğrulandı.
+
+## Playwright UI
+
+`playwright-ui/` bağımsız bir Java 17 Maven projesidir. Smoke testi headless Chromium'da yerel bir HTML örneğini açar, XPath ile arama alanına metin girer, düğmeye tıklar ve sonucu doğrular.
+
+```powershell
+mvn -f playwright-ui/pom.xml exec:java '-Dexec.classpathScope=test' '-Dexec.mainClass=com.microsoft.playwright.CLI' '-Dexec.args=install --only-shell chromium'
+mvn -f playwright-ui/pom.xml test
+```
+
+Surefire raporları `playwright-ui/target/surefire-reports/` altında oluşur. Bu test yerelde ayrı komutla çalışır.
