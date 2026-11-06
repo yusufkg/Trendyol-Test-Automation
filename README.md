@@ -168,4 +168,4 @@ mvn -f playwright-ui/pom.xml exec:java '-Dexec.classpathScope=test' '-Dexec.main
 mvn -f playwright-ui/pom.xml test
 ```
 
-Surefire raporları `playwright-ui/target/surefire-reports/` altında oluşur. Bu test yerelde ayrı komutla çalışır.
+Surefire raporları `playwright-ui/target/surefire-reports/` altında oluşur. Bu test yerelde ayrı komutla ve GitHub Actions içinde Playwright local browser smoke job'ıyla çalışır. Chromium headless shell ve Linux bağımlılıkları testten önce kurulur. Surefire sonuçları başarısızlıkta da playwright-test-reports artifact'ine yüklenir ve 14 gün tutulur. Pages yayını Playwright job'ının da başarılı olmasını bekler.
