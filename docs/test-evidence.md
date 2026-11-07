@@ -2,6 +2,7 @@
 
 | Doğrulama | Sonuç | Kayıt |
 |---|---|---|
+| GitHub Actions, 6 Kasım | 11 birim, 7 dry-run, 1 Karate, 10 API ve 1 Playwright çalıştırması geçti. | [CI #73](evidence/ci-2026-11-06.md) |
 | Selenium hata raporu, 3 Kasım | 11 birim testi ve 7 dry-run senaryosu geçti. Kasıtlı XPath hatasında gerçek Chrome görüntüsü HTML ve JSON içinde doğrulandı. | [Hata ekran görüntüsü](evidence/failure-screenshots.md) |
 | Canlı Selenium, 2 Kasım | TC-003, TC-005, TC-008 ve TC-010 birlikte 4/4 geçti. | [Toplu Chrome koşusu](evidence/selenium-tc010.md) |
 | Yerel API, 1 Kasım | TestNG smoke 3/3, regresyon 10/10 geçti. RestAssured yerel test sunucusunu kullandı. | [API ve Selenium koşuları](evidence/regression-2026-11-01.md) |
