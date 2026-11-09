@@ -180,6 +180,8 @@ TC-001 uygulaması HomePageIT.java içindedir. Canlı koşu komutu:
 mvn -f playwright-ui/pom.xml test '-Dtest=HomePageIT'
 ```
 
-URL, logo, arama alanı, kategori bağlantıları ve uygulama hata mesajları kontrol edilir. Sayfa açıldıktan sonra alınan HTML ve PNG, playwright-ui/target/playwright-live/ altında tutulur.
+URL, logo, arama alanı, kategori bağlantıları ve uygulama hata mesajları kontrol edilir. Hata anındaki HTTP durumu, URL, HTML ve PNG, playwright-ui/target/playwright-live/ altında tutulur.
 
 8 Kasım yerel koşusunda sayfa boş HTML döndürdü ve logo doğrulaması başarısız oldu. Canlı TC-001 başarıyla doğrulanmayı bekliyor. Varsayılan Maven ve CI smoke koşusu SearchSmokeTest sınıfını çalıştırır. [Koşu kaydı](docs/evidence/playwright-tc001.md).
+
+9 Kasım Playwright TC-001 incelemesinde canlı ana sayfa HTTP 403 döndürdü. Test HTTP durumunu doğrular ve hata halinde navigation.txt, HTML ve PNG kayıtları üretir. [Güncel tanılama kaydı](docs/evidence/playwright-tc001.md).
