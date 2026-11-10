@@ -49,3 +49,5 @@ Aynı gün ortak body metni okuma ve kategori başlığı görünürlük hatalar
 - [ ] Yalnızca tamamlanmış çalışmaları CV ve LinkedIn'e ekle.
 
 Bir PR tek bir somut çıktıya odaklanır. Dört haftalık takvim hedeftir; kesin teslim tarihi değildir. Uygulanmamış framework veya senaryo portföyde tamamlanmış olarak gösterilmez.
+
+10 Kasım: mimari, test planı ve senaryo durum belgesi API ve Playwright projeleriyle eşitlendi. Playwright yerel smoke CI içinde doğrulanmış durumda. Canlı TC-001 HTTP 403 nedeniyle başarısızdır. Önceki tarihlerde bekleyen uzak CI doğrulamasının birim/dry-run/yerel tarayıcı kapsamı evidence/ci-2026-11-06.md içinde kaydedildi.
