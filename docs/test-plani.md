@@ -19,3 +19,5 @@ Selenium 7 uygulanmış / 41 planlı; Karate 4 uygulanmış / 44 planlı. Diğer
 CI: birim testleri, Cucumber dry-run ve yerel HTML fixture üzerinde headless Karate testi. Canlı Trendyol adımları ayrıca elle seçilir. Güncel PR koşusunda canlı adımlar çalışmamıştır. HTML raporları ve GitHub Pages rapor yayını vardır; SQL logger güncel kaynakta bulunmaz.
 
 Trendyol login ve Samsung S20 alışveriş akışı kapsamda değildir. Bağımsız API projesinde 5 senaryo, DataProvider ile 10 çalıştırma ve TestNG smoke/regression XML suite seçimi uygulandı. API CI job ve artifact mevcuttur; güncel kapsamın kanıtları api-tests/README.md ve roadmap.md dosyalarında izlenir.
+
+Playwright SearchSmokeTest standart CI içinde yerel HTML üzerinde çalışır ve ayrı playwright-test-reports artifact'i üretir. HomePageIT canlı TC-001 testini açık seçimle çalıştırır. 9 Kasım canlı koşusunda HTTP 403 alındı; başarılı canlı sonuç bekleniyor. [Kanıt](evidence/playwright-tc001.md). Üç job'ın da doğrulanmış başarılı CI kapsamı: [6 Kasım kaydı](evidence/ci-2026-11-06.md).

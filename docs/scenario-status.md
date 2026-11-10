@@ -60,3 +60,12 @@ Selenium: 7 uygulanmış / 41 planlı. Karate: 4 uygulanmış / 44 planlı. Ayn�
 [PR #4 CI koşusu](https://github.com/yusufkg/Trendyol-Test-Automation/actions/runs/39202080626): birim testleri, Cucumber adım eşleşmesi ve yerel fixture üzerinde headless Karate tarayıcı testi başarılıdır. Canlı Selenium/Karate adımları atlanmıştır; Pages yayını PR koşusunda yapılmamıştır.
 
 19 Ekim yerel canlı regresyon: Karate TC-001, TC-002, TC-003 ve TC-005 birlikte geçti. Ayrıntı karate-ui/README.md dosyasındadır. Tarihsel CI/Pages kanıtları yeni geliştirmelerin canlı test sonucu olarak kullanılmaz.
+
+## Playwright kapsamı — 10 Kasım 2026 kaynak kontrolü
+
+| Test | Uygulama | Son doğrulama |
+|---|---|---|
+| SearchSmokeTest | Yerel HTML, XPath giriş/tıklama/sonuç kontrolü | Yerelde ve CI #73 içinde 1/1 başarılı |
+| HomePageIT / TC-001 | Canlı URL, HTTP yanıtı, logo, arama alanı, kategoriler ve hata öğeleri | 9 Kasım canlı koşusunda HTTP 403, başarısız |
+
+Playwright'ta kataloğun tamamı oluşturulmadı. Aynı TC-001 kimliği Selenium, Karate ve Playwright içinde aynı iş akışını temsil eder. [CI kanıtı](evidence/ci-2026-11-06.md), [canlı koşu kaydı](evidence/playwright-tc001.md).
