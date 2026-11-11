@@ -185,3 +185,25 @@ URL, logo, arama alanı, kategori bağlantıları ve uygulama hata mesajları ko
 8 Kasım yerel koşusunda sayfa boş HTML döndürdü ve logo doğrulaması başarısız oldu. Canlı TC-001 başarıyla doğrulanmayı bekliyor. Varsayılan Maven ve CI smoke koşusu SearchSmokeTest sınıfını çalıştırır. [Koşu kaydı](docs/evidence/playwright-tc001.md).
 
 9 Kasım Playwright TC-001 incelemesinde canlı ana sayfa HTTP 403 döndürdü. Test HTTP durumunu doğrular ve hata halinde navigation.txt, HTML ve PNG kayıtları üretir. [Güncel tanılama kaydı](docs/evidence/playwright-tc001.md).
+
+### Playwright PowerShell çalıştırıcısı
+
+Proje kökünden yerel smoke testi:
+
+```powershell
+.\scripts\run-playwright.ps1
+```
+
+İlk kullanımda Chromium kurulumu ve smoke testi:
+
+```powershell
+.\scripts\run-playwright.ps1 -InstallBrowser
+```
+
+Canlı TC-001:
+
+```powershell
+.\scripts\run-playwright.ps1 -Live
+```
+
+Script modül klasörüne geçer, clean test ile önceki çıktıları temizler ve tamamlandığında başlangıç klasörüne döner. Maven veya Chromium kurulumu başarısızsa script hata verir. Canlı koşunun son doğrulanmış sonucu HTTP 403'tür. Surefire ve canlı hata kanıtlarının yolları terminale yazılır.
