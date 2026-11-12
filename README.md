@@ -207,3 +207,11 @@ Canlı TC-001:
 ```
 
 Script modül klasörüne geçer, clean test ile önceki çıktıları temizler ve tamamlandığında başlangıç klasörüne döner. Maven veya Chromium kurulumu başarısızsa script hata verir. Canlı koşunun son doğrulanmış sonucu HTTP 403'tür. Surefire ve canlı hata kanıtlarının yolları terminale yazılır.
+
+### GitHub Actions ile canlı Playwright
+
+Actions → Maven and Karate CI → Run workflow ekranında live_playwright seçeneğini açarak TC-001'i çalıştırabilirsiniz. Varsayılan değeri false olan bu seçenek Selenium/Karate live_tests seçeneğinden bağımsızdır.
+
+Önce yerel Chromium smoke testi, başarılı olursa canlı HomePageIT çalışır. Canlı testin HTTP veya sayfa doğrulama hatası job sonucunu başarısız yapar. Surefire sonuçları ve varsa HTTP/HTML/PNG hata kayıtları playwright-test-reports artifact'inde 14 gün tutulur. Canlı seçenek açık koşularda Pages yayını atlanır.
+
+Bu workflow geliştirmesinin uzak çalıştırması henüz doğrulanmadı. Son canlı yerel sonuç HTTP 403'tür.
