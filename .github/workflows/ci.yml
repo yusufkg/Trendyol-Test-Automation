@@ -11,6 +11,10 @@ on:
         type: boolean
         default: false
 
+      live_playwright:
+        description: Run live Playwright TC-001 against Trendyol
+        type: boolean
+        default: false
 permissions:
   contents: read
 
@@ -65,12 +69,15 @@ jobs:
           '-Dexec.args=install --with-deps --only-shell chromium'
       - name: Run local Playwright browser smoke
         run: mvn -B -ntp -f playwright-ui/pom.xml clean test
+      - name: Live Playwright TC-001 (optional)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.live_playwright }}
+        run: mvn -B -ntp -f playwright-ui/pom.xml test -Dtest=HomePageIT
       - name: Explain Playwright scope
         if: always()
         run: |
           echo '## Playwright Java' >> "$GITHUB_STEP_SUMMARY"
           echo 'Headless Chromium verifies XPath input, click and result assertions against local HTML.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Download playwright-test-reports for Surefire results.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Optional live TC-001 runs only when live_playwright is selected. Inspect its step conclusion and download playwright-test-reports for Surefire results and available live failure evidence.' >> "$GITHUB_STEP_SUMMARY"
       - name: Upload Playwright reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -78,7 +85,9 @@ jobs:
           name: playwright-test-reports
           retention-days: 14
           if-no-files-found: warn
-          path: playwright-ui/target/surefire-reports/
+          path: |
+            playwright-ui/target/surefire-reports/
+            playwright-ui/target/playwright-live/
 
   verify:
     runs-on: ubuntu-latest
@@ -132,11 +141,11 @@ jobs:
             echo 'Pages publication is skipped for private repositories; test-reports remains available as a workflow artifact.' >> "$GITHUB_STEP_SUMMARY"
           fi
       - name: Prepare public report site
-        if: ${{ success() && !github.event.repository.private && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
+        if: ${{ success() && !github.event.repository.private && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests && !inputs.live_playwright }}
         shell: pwsh
         run: ./scripts/build-report-site.ps1
       - name: Upload Pages content
-        if: ${{ success() && !github.event.repository.private && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
+        if: ${{ success() && !github.event.repository.private && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests && !inputs.live_playwright }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: target/report-site
@@ -156,7 +165,7 @@ jobs:
 
   publish-reports:
     needs: [verify, api-tests, playwright-tests]
-    if: ${{ success() && !github.event.repository.private && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests }}
+    if: ${{ success() && !github.event.repository.private && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && !inputs.live_tests && !inputs.live_playwright }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
