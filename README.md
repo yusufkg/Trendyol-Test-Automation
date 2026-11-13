@@ -215,3 +215,12 @@ Actions → Maven and Karate CI → Run workflow ekranında live_playwright seç
 Önce yerel Chromium smoke testi, başarılı olursa canlı HomePageIT çalışır. Canlı testin HTTP veya sayfa doğrulama hatası job sonucunu başarısız yapar. Surefire sonuçları ve varsa HTTP/HTML/PNG hata kayıtları playwright-test-reports artifact'inde 14 gün tutulur. Canlı seçenek açık koşularda Pages yayını atlanır.
 
 Bu workflow geliştirmesinin uzak çalıştırması henüz doğrulanmadı. Son canlı yerel sonuç HTTP 403'tür.
+
+### API testlerini PowerShell ile çalıştırma
+
+```powershell
+.\scripts\run-api.ps1 -Smoke
+.\scripts\run-api.ps1
+```
+
+İlk komut 3 smoke, ikinci komut 10 regresyon çalıştırmasını seçer. Yerel örnek API kullanılır. Her koşu API modülünün önceki raporlarını temizleyerek yeni TestNG HTML ve Surefire XML sonuçları üretir.

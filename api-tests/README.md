@@ -45,3 +45,11 @@ Suite dosyaları src/test/resources/ altındadır. Hazırlık/kapanış metotlar
 28 Ekim yerel doğrulama: smoke 3/3, regression 10/10 başarılı. Surefire XML üzerinden smoke yöntem adları ve regression çalıştırma sayısı kontrol edildi. Son çalıştırma önceki target raporlarını yeniler. Regression XML uzak CI #55 içinde 10/10 başarılıdır; smoke XML uzak koşuda ayrıca seçilmedi.
 
 1 Kasım 2026 yerel tekrar: smoke 3/3, regression 10/10 başarılı. Uzak CI kanıtı: https://github.com/yusufkg/Trendyol-Test-Automation/actions/runs/41204004405 . Artifact kaydı kontrol edildi; ZIP içeriği indirilmedi.
+
+## PowerShell çalıştırıcısı
+
+Proje kökünden regresyon için .\scripts\run-api.ps1, üç testlik smoke paketi için .\scripts\run-api.ps1 -Smoke çalıştırılır.
+
+Script yerel örnek API testlerini çalıştırır. Her koşu clean test ile API modülünün önceki target çıktılarını temizler. TestNG HTML raporunun tam yolu terminale yazılır. Maven başarısızsa script hata verir ve başlangıç klasörüne geri döner.
+
+13 Kasım 2026: scripts/run-api.ps1 ile smoke 3/3 ve varsayılan regresyon 10/10 geçti. Her koşunun Surefire TEST-TestSuite.xml dosyasında test sayısı, failures ve errors kontrol edildi. Bu doğrulama yerel örnek API kapsamındadır.
