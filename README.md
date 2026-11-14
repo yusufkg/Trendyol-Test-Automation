@@ -224,3 +224,5 @@ Bu workflow geliştirmesinin uzak çalıştırması henüz doğrulanmadı. Son c
 ```
 
 İlk komut 3 smoke, ikinci komut 10 regresyon çalıştırmasını seçer. Yerel örnek API kullanılır. Her koşu API modülünün önceki raporlarını temizleyerek yeni TestNG HTML ve Surefire XML sonuçları üretir.
+
+API CI job'ı smoke (3) ve regresyon (10) paketlerini ardışık çalıştıracak şekilde güncellendi. api-test-reports artifact'inde smoke-reports ve surefire-reports ayrı klasörlerdir. Yerel çift koşu 14 Kasım'da doğrulandı; uzak CI sonucu bekliyor.

@@ -31,8 +31,13 @@ jobs:
           java-version: '17'
           cache: maven
           cache-dependency-path: api-tests/pom.xml
-      - name: Run local API contract tests
-        run: mvn -B -ntp -f api-tests/pom.xml clean test
+      - name: Run API smoke suite
+        run: >-
+          mvn -B -ntp -f api-tests/pom.xml clean test
+          -Dqa.suite=src/test/resources/testng-smoke.xml
+          -Dqa.report.directory=target/smoke-reports
+      - name: Run API regression suite
+        run: mvn -B -ntp -f api-tests/pom.xml test
       - name: Explain API report scope
         if: always()
         run: |
@@ -46,7 +51,9 @@ jobs:
           name: api-test-reports
           retention-days: 14
           if-no-files-found: warn
-          path: api-tests/target/surefire-reports/
+          path: |
+            api-tests/target/smoke-reports/
+            api-tests/target/surefire-reports/
 
   playwright-tests:
     name: Playwright local browser smoke

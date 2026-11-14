@@ -53,3 +53,7 @@ Proje kökünden regresyon için .\scripts\run-api.ps1, üç testlik smoke paket
 Script yerel örnek API testlerini çalıştırır. Her koşu clean test ile API modülünün önceki target çıktılarını temizler. TestNG HTML raporunun tam yolu terminale yazılır. Maven başarısızsa script hata verir ve başlangıç klasörüne geri döner.
 
 13 Kasım 2026: scripts/run-api.ps1 ile smoke 3/3 ve varsayılan regresyon 10/10 geçti. Her koşunun Surefire TEST-TestSuite.xml dosyasında test sayısı, failures ve errors kontrol edildi. Bu doğrulama yerel örnek API kapsamındadır.
+
+14 Kasım 2026: CI API job'ına önce smoke, ardından regresyon adımı eklendi. Smoke çıktısı qa.report.directory=target/smoke-reports ile ayrılır; regresyon varsayılan target/surefire-reports dizinini kullanır. İkinci adım clean çalıştırmaz, böylece ilk rapor korunur. api-test-reports artifact'i iki klasörü de toplar. İlk smoke adımı başarısızsa regresyon başlatılmaz.
+
+Aynı Maven komutları yerelde doğrulandı: smoke 3/3, regresyon 10/10. Her iki TEST-TestSuite.xml dosyasının aynı anda mevcut olduğu ve failures/errors değerlerinin sıfır olduğu kontrol edildi. Uzak CI sonucu henüz doğrulanmadı.
