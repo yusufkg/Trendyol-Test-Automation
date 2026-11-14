@@ -9,6 +9,7 @@
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <qa.suite>src/test/resources/testng.xml</qa.suite>
+        <qa.report.directory>${project.build.directory}/surefire-reports</qa.report.directory>
     </properties>
     <dependencies>
         <dependency>
@@ -36,6 +37,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
+                    <reportsDirectory>${qa.report.directory}</reportsDirectory>
                     <suiteXmlFiles>
                         <suiteXmlFile>${qa.suite}</suiteXmlFile>
                     </suiteXmlFiles>

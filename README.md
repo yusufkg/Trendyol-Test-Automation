@@ -224,3 +224,7 @@ Bu workflow geliştirmesinin uzak çalıştırması henüz doğrulanmadı. Son c
 ```
 
 İlk komut 3 smoke, ikinci komut 10 regresyon çalıştırmasını seçer. Yerel örnek API kullanılır. Her koşu API modülünün önceki raporlarını temizleyerek yeni TestNG HTML ve Surefire XML sonuçları üretir.
+
+API CI job'ı smoke (3) ve regresyon (10) paketlerini ardışık çalıştıracak şekilde güncellendi. api-test-reports artifact'inde smoke-reports ve surefire-reports ayrı klasörlerdir. Yerel çift koşu 14 Kasım'da doğrulandı; uzak CI sonucu bekliyor.
+
+14 Kasım toplu yerel doğrulama tamamlandı. Birim 11/11, Cucumber dry-run 7/7, API smoke 3/3, API regresyon 10/10, Karate fixture 1/1 ve Playwright fixture 1/1 geçti. Playwright ilk denemede eksik tarayıcı dosyası nedeniyle hata verdi; -InstallBrowser ile kurulumdan sonra geçti. [Komutlar ve kapsam](docs/evidence/regression-2026-11-14.md).
