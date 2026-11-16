@@ -57,3 +57,5 @@ Script yerel örnek API testlerini çalıştırır. Her koşu clean test ile API
 14 Kasım 2026: CI API job'ına önce smoke, ardından regresyon adımı eklendi. Smoke çıktısı qa.report.directory=target/smoke-reports ile ayrılır; regresyon varsayılan target/surefire-reports dizinini kullanır. İkinci adım clean çalıştırmaz, böylece ilk rapor korunur. api-test-reports artifact'i iki klasörü de toplar. İlk smoke adımı başarısızsa regresyon başlatılmaz.
 
 Aynı Maven komutları yerelde doğrulandı: smoke 3/3, regresyon 10/10. Her iki TEST-TestSuite.xml dosyasının aynı anda mevcut olduğu ve failures/errors değerlerinin sıfır olduğu kontrol edildi. Uzak CI sonucu henüz doğrulanmadı.
+
+16 Kasım kontrolü: bd0c31a kaynak commit'inin 15 Kasım CI #100 koşusunda smoke 3/3 ve regresyon 10/10, ayrı adımlarda geçti. İki rapor kaynak yolu yükleme logunda ve api-test-reports artifact metadata kaydı API üzerinden doğrulandı. ZIP içeriği indirilmedi. Ayrıntı: ../docs/evidence/ci-2026-11-15.md.

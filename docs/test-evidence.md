@@ -2,6 +2,7 @@
 
 | Doğrulama | Sonuç | Kayıt |
 |---|---|---|
+| GitHub Actions, 15 Kasım | 11 birim, 7 dry-run, API smoke 3, API regresyon 10, Karate 1 ve Playwright 1 geçti. | [CI #100](evidence/ci-2026-11-15.md) |
 | Yerel toplu doğrulama, 14 Kasım | 11 birim, 7 dry-run, 3 API smoke, 10 API regresyon, 1 Karate ve 1 Playwright geçti. | [Toplu doğrulama](evidence/regression-2026-11-14.md) |
 | GitHub Actions, 6 Kasım | 11 birim, 7 dry-run, 1 Karate, 10 API ve 1 Playwright çalıştırması geçti. | [CI #73](evidence/ci-2026-11-06.md) |
 | Selenium hata raporu, 3 Kasım | 11 birim testi ve 7 dry-run senaryosu geçti. Kasıtlı XPath hatasında gerçek Chrome görüntüsü HTML ve JSON içinde doğrulandı. | [Hata ekran görüntüsü](evidence/failure-screenshots.md) |
