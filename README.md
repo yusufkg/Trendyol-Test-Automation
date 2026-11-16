@@ -88,12 +88,13 @@ Pages yayını public depoda, başarılı standart main koşularında üç test 
 
 | Kayıt | Sonuç |
 |---|---|
+| [15 Kasım CI #100](docs/evidence/ci-2026-11-15.md) | 11 birim, 7 dry-run, API smoke 3, API regresyon 10, Karate 1 ve Playwright 1 geçti |
 | [14 Kasım yerel toplu kontrol](docs/evidence/regression-2026-11-14.md) | 11 birim, 7 dry-run, API smoke 3, API regresyon 10, Karate 1 ve Playwright 1 geçti |
 | [6 Kasım CI #73](docs/evidence/ci-2026-11-06.md) | 11 birim, 7 dry-run, API regresyon 10, Karate 1 ve Playwright 1 geçti |
 | [2 Kasım canlı Selenium](docs/evidence/selenium-tc010.md) | TC-003/005/008/010 birlikte 4/4 geçti |
 | [Playwright canlı TC-001](docs/evidence/playwright-tc001.md) | 9 Kasım HTTP 403; başarılı canlı koşu bekleniyor |
 
-14 Kasım Playwright smoke testi ilk denemede eksik tarayıcı dosyası nedeniyle başlayamadı. -InstallBrowser ile kurulumdan sonra geçti. API smoke CI adımı ve live_playwright workflow seçeneğinin uzak çalıştırması ayrıca doğrulanmayı bekliyor.
+14 Kasım Playwright smoke testi ilk denemede eksik tarayıcı dosyası nedeniyle başlayamadı. -InstallBrowser ile kurulumdan sonra geçti. API smoke ve regresyon adımları CI #100 içinde doğrulandı. live_playwright seçeneğinin elle açılan canlı koşusu ayrıca doğrulanmayı bekliyor.
 
 Cucumber dry-run Gherkin–Java eşleşmesini kontrol eder. Yerel HTML tarayıcı testleri kontrollü örnekleri doğrular. Canlı site sonuçları tarih ve TC kimliğiyle belgelenir. [Tüm test kanıtları](docs/test-evidence.md).
 
