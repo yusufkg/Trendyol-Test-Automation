@@ -2,6 +2,10 @@
 
 Java 17, RestAssured 6.1.0 ve TestNG 7.11.0 ile bağımsız Maven projesi.
 
+17 Kasım güncel kapsamı API-001–API-006 olmak üzere 6 senaryo, regresyonda 11 ve smoke paketinde 3 çalıştırmadır. Aşağıdaki tarihli 10 çalıştırma kayıtları önceki kapsamı gösterir.
+
+API-006: DELETE /products/1 için 200 ve silinen ürün gövdesi, sonraki GET için 404, tekrarlanan DELETE için 404 ve diğer kaydın korunması doğrulanır. DELETE yalnızca ürün kaynağında desteklenir; koleksiyonda desteklenmez.
+
 ```powershell
 mvn -B -ntp -f api-tests/pom.xml clean test
 ```
@@ -28,7 +32,7 @@ DataProvider verileri: src/test/java/com/yusuf/qa/api/data/InvalidProductData.ja
 
 ## TestNG suite seçimi
 
-Varsayılan testng.xml, regression grubunu çalıştırır: API-001–API-005, toplam 10 çalıştırma. CI komutu değişmeden bu kapsamı kullanır.
+Varsayılan testng.xml, regression grubunu çalıştırır: API-001–API-006, toplam 11 çalıştırma. CI komutu değişmeden bu kapsamı kullanır.
 
 ```powershell
 mvn -B -ntp -f api-tests/pom.xml clean test
@@ -59,3 +63,5 @@ Script yerel örnek API testlerini çalıştırır. Her koşu clean test ile API
 Aynı Maven komutları yerelde doğrulandı: smoke 3/3, regresyon 10/10. Her iki TEST-TestSuite.xml dosyasının aynı anda mevcut olduğu ve failures/errors değerlerinin sıfır olduğu kontrol edildi. Uzak CI sonucu henüz doğrulanmadı.
 
 16 Kasım kontrolü: bd0c31a kaynak commit'inin 15 Kasım CI #100 koşusunda smoke 3/3 ve regresyon 10/10, ayrı adımlarda geçti. İki rapor kaynak yolu yükleme logunda ve api-test-reports artifact metadata kaydı API üzerinden doğrulandı. ZIP içeriği indirilmedi. Ayrıntı: ../docs/evidence/ci-2026-11-15.md.
+
+17 Kasım yerel doğrulama: smoke 3/3, regresyon 11/11 geçti. İlk regresyon denemesinde yeni testte Map gövdesi için JSON serializer bulunamadı; mevcut testlerle aynı JSON metin biçimi kullanılarak düzeltildi. Üretim API'si yerine kontrollü yerel sunucu test edildi. Uzak CI sonucu bekliyor.

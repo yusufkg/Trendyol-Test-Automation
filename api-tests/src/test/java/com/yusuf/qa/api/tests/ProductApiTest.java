@@ -21,6 +21,47 @@ public class ProductApiTest {
     private LocalApiServer server;
     private RequestSpecification request;
 
+    @Test(groups = "regression", description = "API-006 - Delete product and preserve other records on retry")
+    public void deleteProduct() {
+        int survivorId = given().spec(request).contentType(ContentType.JSON)
+                .body("""
+                        {"name":"Klavye","price":899.50}
+                        """)
+                .when().post("/products")
+                .then().statusCode(201).extract().path("id");
+
+        given().spec(request).pathParam("id", 1)
+                .when().delete("/products/{id}")
+                .then().log().ifValidationFails()
+                .statusCode(200).contentType(ContentType.JSON)
+                .body("id", equalTo(1))
+                .body("name", equalTo("Kablosuz Mouse"))
+                .body("price", equalTo(499.90f));
+
+        given().spec(request).pathParam("id", 1)
+                .when().get("/products/{id}")
+                .then().statusCode(404)
+                .body("$", equalTo(Map.of("error", "NOT_FOUND")));
+
+        Object remainingProducts = given().spec(request)
+                .when().get("/products")
+                .then().statusCode(200)
+                .body("total", equalTo(1))
+                .body("products", hasSize(1))
+                .body("products[0].id", equalTo(survivorId))
+                .extract().jsonPath().getMap("$");
+
+        given().spec(request).pathParam("id", 1)
+                .when().delete("/products/{id}")
+                .then().statusCode(404).contentType(ContentType.JSON)
+                .body("$", equalTo(Map.of("error", "NOT_FOUND")));
+
+        given().spec(request)
+                .when().get("/products")
+                .then().log().ifValidationFails()
+                .statusCode(200).body("$", equalTo(remainingProducts));
+    }
+
     @BeforeMethod(alwaysRun = true)
     public void startApi() throws IOException {
         server = new LocalApiServer();
