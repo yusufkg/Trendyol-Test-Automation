@@ -58,9 +58,12 @@ public final class LocalApiServer implements AutoCloseable {
                         status = 400;
                         body = Map.of("error", "INVALID_PRODUCT");
                     }
+                } else if (!collection && method.equals("DELETE")) {
+                    status = 200;
+                    body = products.remove(id);
                 } else if (!method.equals("GET")) {
                     status = 405;
-                    exchange.getResponseHeaders().set("Allow", collection ? "GET, POST" : "GET");
+                    exchange.getResponseHeaders().set("Allow", collection ? "GET, POST" : "GET, DELETE");
                     body = Map.of("error", "METHOD_NOT_ALLOWED");
                 } else {
                     status = 200;

@@ -31,6 +31,6 @@ Güncel kaynakta SQL logger veya SQL sonuç tablosuna bağlanan plugin bulunmuyo
 
 Playwright: SearchSmokeTest, yerel HTML üzerinde XPath ile input/click/assertion işlemlerini doğrular. CI, Chromium headless shell kurulumunu yapar ve playwright-test-reports artifact'ini toplar. HomePageIT açıkça -Dtest=HomePageIT ile seçilen canlı TC-001 testidir. HTTP yanıtı başarısızsa assertion hatası verir; navigation.txt, HTML ve PNG kaydını dener. Kanıt toplama hatası asıl hataya suppressed exception olarak eklenir.
 
-API: ProductApiTest → her test için LocalApiServer → RestAssured HTTP istekleri → TestNG assertion ve raporları. InvalidProductData negatif veri setlerini sağlar. testng.xml regresyonda 10, testng-smoke.xml smoke paketinde 3 çalıştırma seçer. CI api-test-reports artifact'ini toplar.
+API: ProductApiTest → her test için LocalApiServer → RestAssured HTTP istekleri → TestNG assertion ve raporları. InvalidProductData negatif veri setlerini sağlar. testng.xml regresyonda 11, testng-smoke.xml smoke paketinde 3 çalıştırma seçer. CI api-test-reports artifact'ini toplar.
 
 Pages yayını verify, api-tests ve playwright-tests job'larının başarısını bekler. [Doğrulanmış CI kapsamı](evidence/ci-2026-11-06.md). [Playwright canlı HTTP 403 kaydı](evidence/playwright-tc001.md).
