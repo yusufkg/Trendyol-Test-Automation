@@ -37,7 +37,7 @@ public final class LocalApiServer implements AutoCloseable {
                 if (!collection && (id == null || !products.containsKey(id))) {
                     status = 404;
                     body = Map.of("error", "NOT_FOUND");
-                } else if (collection && method.equals("POST")) {
+                } else if ((collection && method.equals("POST")) || (!collection && method.equals("PUT"))) {
                     try {
                         Object parsed = new JsonSlurper().parseText(new String(
                                 exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8));
@@ -47,12 +47,14 @@ public final class LocalApiServer implements AutoCloseable {
                                 || new BigDecimal(price.toString()).signum() <= 0) {
                             throw new IllegalArgumentException("Invalid product");
                         }
-                        int createdId = nextId++;
-                        Map<String, Object> product = Map.of("id", createdId, "name", name,
+                        int productId = collection ? nextId++ : id;
+                        Map<String, Object> product = Map.of("id", productId, "name", name,
                                 "price", new BigDecimal(price.toString()));
-                        products.put(createdId, product);
-                        exchange.getResponseHeaders().set("Location", "/products/" + createdId);
-                        status = 201;
+                        products.put(productId, product);
+                        if (collection) {
+                            exchange.getResponseHeaders().set("Location", "/products/" + productId);
+                        }
+                        status = collection ? 201 : 200;
                         body = product;
                     } catch (IllegalArgumentException | groovy.json.JsonException invalidBody) {
                         status = 400;
@@ -63,7 +65,7 @@ public final class LocalApiServer implements AutoCloseable {
                     body = products.remove(id);
                 } else if (!method.equals("GET")) {
                     status = 405;
-                    exchange.getResponseHeaders().set("Allow", collection ? "GET, POST" : "GET, DELETE");
+                    exchange.getResponseHeaders().set("Allow", collection ? "GET, POST" : "GET, PUT, DELETE");
                     body = Map.of("error", "METHOD_NOT_ALLOWED");
                 } else {
                     status = 200;
