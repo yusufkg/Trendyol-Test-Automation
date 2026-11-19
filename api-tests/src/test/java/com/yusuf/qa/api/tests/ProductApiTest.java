@@ -21,6 +21,59 @@ public class ProductApiTest {
     private LocalApiServer server;
     private RequestSpecification request;
 
+    @Test(groups = "regression", description = "API-007 - Update product and preserve state after rejected updates")
+    public void updateProduct() {
+        String updatedProduct = """
+                {"name":"Güncellenmiş Mouse","price":599.90}
+                """;
+
+        given().spec(request).contentType(ContentType.JSON).body(updatedProduct)
+                .when().put("/products/1")
+                .then().log().ifValidationFails()
+                .statusCode(200).contentType(ContentType.JSON)
+                .body("id", equalTo(1))
+                .body("name", equalTo("Güncellenmiş Mouse"))
+                .body("price", equalTo(599.90f));
+
+        given().spec(request)
+                .when().get("/products/1")
+                .then().statusCode(200)
+                .body("id", equalTo(1))
+                .body("name", equalTo("Güncellenmiş Mouse"))
+                .body("price", equalTo(599.90f));
+
+        Object productsAfterUpdate = given().spec(request)
+                .when().get("/products")
+                .then().statusCode(200)
+                .body("total", equalTo(1))
+                .body("products", hasSize(1))
+                .body("products[0].name", equalTo("Güncellenmiş Mouse"))
+                .body("products[0].price", equalTo(599.90f))
+                .extract().jsonPath().getMap("$");
+
+        given().spec(request).contentType(ContentType.JSON)
+                .body("""
+                        {"name":"Geçersiz Mouse","price":-1}
+                        """)
+                .when().put("/products/1")
+                .then().statusCode(400).contentType(ContentType.JSON)
+                .body("$", equalTo(Map.of("error", "INVALID_PRODUCT")));
+
+        given().spec(request).contentType(ContentType.JSON).body(updatedProduct)
+                .when().put("/products/999")
+                .then().statusCode(404).contentType(ContentType.JSON)
+                .body("$", equalTo(Map.of("error", "NOT_FOUND")));
+
+        given().spec(request)
+                .when().get("/products")
+                .then().log().ifValidationFails()
+                .statusCode(200).body("$", equalTo(productsAfterUpdate));
+
+        given().spec(request).contentType(ContentType.JSON).body(updatedProduct)
+                .when().post("/products")
+                .then().statusCode(201).body("id", equalTo(2));
+    }
+
     @Test(groups = "regression", description = "API-006 - Delete product and preserve other records on retry")
     public void deleteProduct() {
         int survivorId = given().spec(request).contentType(ContentType.JSON)

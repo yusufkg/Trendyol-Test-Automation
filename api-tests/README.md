@@ -2,7 +2,7 @@
 
 Java 17, RestAssured 6.1.0 ve TestNG 7.11.0 ile bağımsız Maven projesi.
 
-17 Kasım güncel kapsamı API-001–API-006 olmak üzere 6 senaryo, regresyonda 11 ve smoke paketinde 3 çalıştırmadır. Aşağıdaki tarihli 10 çalıştırma kayıtları önceki kapsamı gösterir.
+19 Kasım güncel kapsamı API-001–API-007 olmak üzere 7 senaryo, regresyonda 12 ve smoke paketinde 3 çalıştırmadır. Aşağıdaki tarihli 10 ve 11 çalıştırma kayıtları önceki kapsamı gösterir.
 
 API-006: DELETE /products/1 için 200 ve silinen ürün gövdesi, sonraki GET için 404, tekrarlanan DELETE için 404 ve diğer kaydın korunması doğrulanır. DELETE yalnızca ürün kaynağında desteklenir; koleksiyonda desteklenmez.
 
@@ -32,7 +32,7 @@ DataProvider verileri: src/test/java/com/yusuf/qa/api/data/InvalidProductData.ja
 
 ## TestNG suite seçimi
 
-Varsayılan testng.xml, regression grubunu çalıştırır: API-001–API-006, toplam 11 çalıştırma. CI komutu değişmeden bu kapsamı kullanır.
+Varsayılan testng.xml, regression grubunu çalıştırır: API-001–API-007, toplam 12 çalıştırma. CI komutu değişmeden bu kapsamı kullanır.
 
 ```powershell
 mvn -B -ntp -f api-tests/pom.xml clean test
@@ -65,3 +65,7 @@ Aynı Maven komutları yerelde doğrulandı: smoke 3/3, regresyon 10/10. Her iki
 16 Kasım kontrolü: bd0c31a kaynak commit'inin 15 Kasım CI #100 koşusunda smoke 3/3 ve regresyon 10/10, ayrı adımlarda geçti. İki rapor kaynak yolu yükleme logunda ve api-test-reports artifact metadata kaydı API üzerinden doğrulandı. ZIP içeriği indirilmedi. Ayrıntı: ../docs/evidence/ci-2026-11-15.md.
 
 17 Kasım yerel doğrulama: smoke 3/3, regresyon 11/11 geçti. İlk regresyon denemesinde yeni testte Map gövdesi için JSON serializer bulunamadı; mevcut testlerle aynı JSON metin biçimi kullanılarak düzeltildi. Üretim API'si yerine kontrollü yerel sunucu test edildi. Uzak CI sonucu bekliyor.
+
+19 Kasım: API-007 ürün güncelleme eklendi. PUT /products/1 için 200, aynı kimlikle yeni ad/fiyat, GET ve liste görünümü doğrulanır. Geçersiz fiyat 400, bulunamayan kimlik 404 döndürür; bu isteklerden sonra liste aynı kalır. Sonraki POST kimliğinin 2 olduğu kontrol edilerek güncellemenin kimlik sayacını tüketmediği doğrulanır. Mevcut POST doğrulaması PUT için de kullanılır. Koleksiyona PUT desteklenmez.
+
+Yerel scripts/run-api.ps1 -Smoke koşusu 3/3, varsayılan regresyon 12/12 geçti. Uzak CI sonucu henüz doğrulanmadı.

@@ -53,3 +53,5 @@ Bir PR tek bir somut çıktıya odaklanır. Dört haftalık takvim hedeftir; kes
 10 Kasım: mimari, test planı ve senaryo durum belgesi API ve Playwright projeleriyle eşitlendi. Playwright yerel smoke CI içinde doğrulanmış durumda. Canlı TC-001 HTTP 403 nedeniyle başarısızdır. Önceki tarihlerde bekleyen uzak CI doğrulamasının birim/dry-run/yerel tarayıcı kapsamı evidence/ci-2026-11-06.md içinde kaydedildi.
 
 17 Kasım: API-006 ürün silme akışı eklendi. DELETE 200, silinen kaydın GET/DELETE isteklerinde 404 ve diğer ürünün korunması yerel regresyonda doğrulandı. Güncel API kapsamı 6 senaryo, regresyonda 11 ve smoke paketinde 3 çalıştırmadır.
+
+19 Kasım: API-007 PUT ile ürün güncelleme uygulandı. Geçersiz/bulunamayan güncellemede durumun korunması ve sonraki POST kimliği test edildi. Yerel smoke 3/3 ve regresyon 12/12 geçti. API kapsamı 7 senaryodur.

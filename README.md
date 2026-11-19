@@ -10,7 +10,7 @@ Java tabanlı QA otomasyon portföyü. Misafir e-ticaret akışları, kontrollü
 |---|---|---|
 | Kök Maven projesi | Java 17, Selenium 4.27.0, Cucumber 7.20.1, JUnit 4 | 11 birim testi, 7 UI senaryosu |
 | karate-ui | Karate 1.5.2, JUnit 5 | 4 Trendyol senaryosu, 1 yerel Chrome smoke testi |
-| api-tests | RestAssured 6.1.0, TestNG 7.11.0 | 6 API senaryosu; smoke 3, regresyon 11 çalıştırma |
+| api-tests | RestAssured 6.1.0, TestNG 7.11.0 | 7 API senaryosu; smoke 3, regresyon 12 çalıştırma |
 | playwright-ui | Playwright Java 1.64.0, JUnit 4 | 1 yerel Chromium smoke testi, canlı TC-001 uygulaması |
 
 48 senaryoluk katalogda Selenium için 7 uygulanmış / 41 planlı, Karate için 4 uygulanmış / 44 planlı senaryo vardır. @planned etiketli senaryolar varsayılan koşuya alınmaz. Aynı TC kimliği birden fazla framework içinde uygulanabilir.
@@ -53,7 +53,7 @@ API ve Playwright scriptleri clean test çalıştırır, önceki modül çıktı
 
 ## API doğrulamaları
 
-Testler 127.0.0.1 üzerinde her test için ayrı bir HTTP sunucusu açar. Veriler bellekte tutulur. API-001 listeleme, API-002 ürün getirme, API-003 ürün oluşturma ve kayıt kontrolü, API-004 geçersiz veri reddi ve kayıtların korunması, API-005 bulunamayan ürün yanıtını doğrular. API-006 DELETE ile ürün silmeyi, ardından GET ve tekrar DELETE için 404 yanıtını ve diğer ürünün korunmasını doğrular.
+Testler 127.0.0.1 üzerinde her test için ayrı bir HTTP sunucusu açar. Veriler bellekte tutulur. API-001 listeleme, API-002 ürün getirme, API-003 ürün oluşturma ve kayıt kontrolü, API-004 geçersiz veri reddi ve kayıtların korunması, API-005 bulunamayan ürün yanıtını doğrular. API-006 DELETE ile ürün silmeyi, ardından GET ve tekrar DELETE için 404 yanıtını ve diğer ürünün korunmasını doğrular. API-007 PUT ile güncellemeyi, kimlik ve liste tutarlılığını, geçersiz ve bulunamayan ürün güncellemelerinde kayıtların korunmasını doğrular.
 
 API-004, TestNG DataProvider ile altı geçersiz veri setini kullanır. TestNG XML dosyaları smoke ve regresyon gruplarını seçer. [API ayrıntıları ve Maven komutları](api-tests/README.md).
 
